@@ -1,6 +1,8 @@
 import java.time.LocalDate; 
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,7 +16,9 @@ public class Carros implements CalculaValor {
 	private int quilometragem;
 	private boolean situacao;
 	private double taxaDiaria;
+	//private double taxaPorKm;
 	private String observacoes;
+	private double valorPendente;
 	
 	//construtor
 	public Carros(String placa, int ano, String modelo, int quilometragem, boolean situacao, double taxaDiaria, String observacoes)
@@ -25,7 +29,9 @@ public class Carros implements CalculaValor {
 		this.quilometragem = quilometragem;
 		this.situacao = situacao;
 		this.taxaDiaria = taxaDiaria;
+		//this.taxaPorKm = taxaPorKm;
 		this.observacoes = observacoes;
+		//this.valorPendente = valorPendente;
 	}
 	
 	//getts
@@ -35,13 +41,17 @@ public class Carros implements CalculaValor {
 	public int getQuilometragem() { return this.quilometragem; }
 	public boolean getSituacao() { return this.situacao; }
 	public double getTaxaDiaria() { return this.taxaDiaria; }
+	//public double getTaxaPorKm() { return this.taxaPorKm; }
 	public String getObservacoes() { return this.observacoes; }
+	public double getValorPendente() { return this.valorPendente; }
 	
 	//sets
 	public void setQuilometragem(int quilometragem) { this.quilometragem += quilometragem; }
 	public void setSituacao(boolean situacao) { this.situacao = situacao; }
 	public void setTaxaDiaria(double taxaDiaria) { this.taxaDiaria = taxaDiaria; }
+	//public void setTaxaPorKm(double taxaPorKm) { this.taxaPorKm = taxaPorKm; }
 	public void setObservacoes(String observacoes) { this.observacoes = observacoes; }
+	public void setValorPendente(double valorPendente) { this.valorPendente = valorPendente; }
 	
 	public void printCarro()
 	{
@@ -71,10 +81,32 @@ public class Carros implements CalculaValor {
 		
 	}
 	
-	public void getRecibo(int quilometragem, String inicio, String fim)
+	/*public double calculaValorKm() {
+		if(this.ano == 2021)
+		{
+			double aumentoTaxa = (getTaxaPorKm() + (getTaxaPorKm() * 0.5));
+			setTaxaPorKm(aumentoTaxa);
+			return aumentoTaxa;
+		}
+		else if(this.ano >= 2019)
+		{
+			double aumentoTaxa = getTaxaPorKm() + (getTaxaPorKm() * 0.2);
+			setTaxaPorKm(aumentoTaxa);
+			return aumentoTaxa;
+		}
+		else
+		{
+			double aumentoTaxa = getTaxaPorKm();
+			return aumentoTaxa;
+		}
+		
+	} */
+	
+	public void devolverCarro(int quilometragem, String inicio, String fim, int pago)
 	{
-		setQuilometragem(quilometragem);
-		System.out.println("quilometragem atualizada: " +getQuilometragem()+"km");
+		int quilometragemAndada = (quilometragem - getQuilometragem());
+		setQuilometragem(quilometragemAndada);
+		System.out.printf("Quilometragem atualizada: %dKm\nQuilometros andados:%dKm\n", getQuilometragem(), quilometragemAndada);
 		
 		/* diferença de dias entre duas datas, transforme-as para milissegundos, obtenha a diferença, 
 		  some 1 hora (devido a problemas de horário de verão etc.) e divida por 86400000. */
@@ -94,8 +126,42 @@ public class Carros implements CalculaValor {
 		}
         long dt = (d2.getTime() - d1.getTime()) + 3600000; // 1 hora para compensar horário de verão
         System.out.println ("Dias com o carro:"+dt / 86400000L);
-        System.out.println ("valor a pagar:"+(dt / 86400000L)*(this.taxaDiaria));
+        double valorPendente =(dt / 86400000L)*(this.taxaDiaria);
+        System.out.println ("valor a pagar:"+valorPendente);
+        
+        //sett na pendencia, caso pago = 0 quer dizer que o cliente pagou o carro e não vai ficar com pendencia
+        if(pago == 0)
+        	setValorPendente(0.0);
+        else
+        	setValorPendente(valorPendente);
+        
+        //colocando o carro disponivel novamente
+        setSituacao(true);
 	}
 	
+	public boolean alugarCarro(boolean pendencia)
+	{
+		if(this.situacao && !pendencia)
+		{
+			System.out.println("Carro alugado !!");
+			Date data = new Date();
+			DateFormat df = new SimpleDateFormat ("dd/MM/yyyy");
+			df.format( data );
+			System.out.println("Data do aluguel: "+data);
+			setSituacao(false); //deixando o carro indisponivel
+			return true;
+		}
+		else if(!this.situacao)
+		{
+			System.out.println("Carro não pode ser alugado !!");
+			return false;
+		}
+		else if(pendencia)
+		{
+			System.out.println("Cliente com pendencia");
+			return false;
+		}
+		return false;
+	}
 	
 }

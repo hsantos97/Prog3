@@ -12,6 +12,7 @@ public class PessoaFisica extends Pessoa {
 	
 	public void printPessoaFisica()
 	{
-		System.out.printf("Nome: %s\nEndereço: %s\nTelefone: %s\nCPF: %s\n", getNome(), getEndereco(), getTelefone(), this.cpf);
+		System.out.printf("Nome: %s\nEndereço: %s\nTelefone: %s\nCPF: %s\nValor da Pendencia: %.2f\n", getNome(), 
+				getEndereco(), getTelefone(), this.cpf, getValorPendencia());
 	}
 }

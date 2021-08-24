@@ -14,6 +14,7 @@ public class PessoaJuridica extends Pessoa{
 	
 	public void printPessoaJuridica()
 	{
-		System.out.printf("Nome: %s\nEndereço: %s\nTelefone: %s\nCNPJ: %s\nRazao Social: %s\n", getNome(), getEndereco(), getTelefone(), this.cnpj, this.razaoSocial);
+		System.out.printf("Nome: %s\nEndereço: %s\nTelefone: %s\nCNPJ: %s\nRazao Social: %s\nValor Pendente:%.2f\n", 
+				getNome(), getEndereco(), getTelefone(), this.cnpj, this.razaoSocial, getValorPendencia());
 	}
 }

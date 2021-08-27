@@ -78,7 +78,7 @@ public class utilidades {
 		{
 			FileWriter fileWriter = new FileWriter("cliente.txt", true);
 			PrintWriter printWriter = new PrintWriter(fileWriter);
-			printWriter.printf("%s %s %s %s %.2f", pf.getNome(), pf.getEndereco(), pf.getTelefone(), pf.getCpf(), 
+			printWriter.printf("%s %s %s %s %.2f %n", pf.getNome(), pf.getEndereco(), pf.getTelefone(), pf.getCpf(), 
 					pf.getValorPendencia());
 			//printWriter.println(pf.getNome()+" "+pf.getEndereco()+" "+pf.getTelefone()+" "+pf.getCpf()+" "+pf.getValorPendencia());
 			/*printWriter.println(pf.getEndereco());
@@ -103,8 +103,8 @@ public class utilidades {
 		{
 			FileWriter fileWriter = new FileWriter("cliente.txt", true);
 			PrintWriter printWriter = new PrintWriter(fileWriter);
-			printWriter.printf("%s %s %s %s %s %.2f", pj.getNome(), pj.getEndereco(), pj.getTelefone(), pj.getCnpj(), 
-					pj.getRazaoSocial(), pj.getValorPendencia());
+			printWriter.printf("%s %s %s %s %s %.2f %n", pj.getNome(), pj.getEndereco(), pj.getTelefone(), pj.getRazaoSocial(), 
+					pj.getCnpj(), pj.getValorPendencia());
 			/*printWriter.println(pj.getNome()+" "+pj.getEndereco()+" "+pj.getTelefone()+" "+pj.getCnpj()
 			+" "+pj.getRazaoSocial()+" "+pj.getValorPendencia()); */
 			//printWriter.println(pj.getEndereco());
@@ -261,5 +261,29 @@ public class utilidades {
 			e.printStackTrace();
 		}
 		return car;
+	}
+	
+	public ArrayList<Pessoa> getPessoaTxt()
+	{
+		File dir = new File("/home/harison/Documents/prog3/Prog3/trabalho1");
+		File arq = new File(dir, "cliente.txt");
+		ArrayList<Pessoa> pe = new ArrayList<>();
+		
+		try {
+			Scanner arquivo = new Scanner(new FileReader(arq));
+			while(arquivo.hasNextLine())
+			{
+				String linha = arquivo.nextLine();
+				String[] itens = linha.split(" ");
+
+				if(itens.length == 5)
+					pe.add(new PessoaFisica(itens[0], itens[1], itens[2], itens[3]));
+				else if(itens.length == 6)
+					pe.add(new PessoaJuridica(itens[0], itens[1], itens[2], itens[3], itens[4]));
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return pe;
 	}
 }

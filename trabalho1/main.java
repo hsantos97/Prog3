@@ -36,6 +36,7 @@ public class main {
 					String cpf = leitor.next();
 					PessoaFisica pf = new PessoaFisica(nome, endereco, telefone, cpf);
 					ut.escreveArqPf(pf);
+					ut.getPessoaTxt();//atualizar o arquivo txt
 					pessoas.add(new PessoaFisica(nome, endereco, telefone, cpf));
 					System.out.println("PF CADASTRADO ");
 					break;
@@ -53,6 +54,7 @@ public class main {
 					String razaoSocial = leitor.next();
 					PessoaJuridica pj = new PessoaJuridica(nomePj, enderecoPj, telefonePj, cnpj, razaoSocial);
 					ut.escreveArqPj(pj);
+					ut.getPessoaTxt();
 					pessoas.add(new PessoaJuridica(nomePj, enderecoPj, telefonePj, cnpj, razaoSocial));
 					System.out.println("PJ CADASTRADO ");
 					break;
@@ -108,19 +110,19 @@ public class main {
 					//case para buscar cliente
 					System.out.println("Entre com o nome do Cliente:");
 					String n = leitor.next();
-					/*utilidades u = new utilidades();
-					Pessoa pe = u.buscaCliente(pessoas, n);
+
+					pessoas = ut.getPessoaTxt();
+					Pessoa pe = ut.buscaCliente(pessoas, n);
 					if(pe == null)
-						break; */
-					System.out.println(ut.busca(n));
+						break;
 					break;
 				case 7:
 					//case para buscar o carro
 					System.out.println("Entre com o Modelo:");
 					String mod = leitor.next();
-					utilidades u2 = new utilidades();
-					carro = u2.getCarroTxt();
-					Carros co = u2.buscaCarro(carro, mod);
+					//utilidades u2 = new utilidades();
+					carro = ut.getCarroTxt();
+					Carros co = ut.buscaCarro(carro, mod);
 					if(co == null)
 						break;
 					break;

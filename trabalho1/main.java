@@ -14,6 +14,9 @@ public class main {
 		int op;
 		boolean flag = true;
 		
+		utilidades ut = new utilidades();
+		ut.criaArqTxt();
+		
 		while(flag)
 		{
 			System.out.printf("1-Cadastrar Pf\n2-Cadastrar Pj\n3-Cadastrar Carro\n4-Print Clientes Cadastrados\n"
@@ -31,6 +34,8 @@ public class main {
 					String telefone = leitor.next();
 					System.out.println("Entre com o cpf: ");
 					String cpf = leitor.next();
+					PessoaFisica pf = new PessoaFisica(nome, endereco, telefone, cpf);
+					ut.escreveArqPf(pf);
 					pessoas.add(new PessoaFisica(nome, endereco, telefone, cpf));
 					System.out.println("PF CADASTRADO ");
 					break;
@@ -46,6 +51,8 @@ public class main {
 					String cnpj = leitor.next();
 					System.out.println("Entre com o Razao Social: ");
 					String razaoSocial = leitor.next();
+					PessoaJuridica pj = new PessoaJuridica(nomePj, enderecoPj, telefonePj, cnpj, razaoSocial);
+					ut.escreveArqPj(pj);
 					pessoas.add(new PessoaJuridica(nomePj, enderecoPj, telefonePj, cnpj, razaoSocial));
 					System.out.println("PJ CADASTRADO ");
 					break;
@@ -73,33 +80,39 @@ public class main {
 					else
 						situacao = false;
 					
+					Carros c3 = new Carros(placa, ano, modelo, quilometragem, situacao, txDiaria, observacao);
+					ut.escreveArqCarro(c3);
+					
 					carro.add(new Carros(placa, ano, modelo, quilometragem, situacao, txDiaria, observacao));
 					
 					System.out.println("CARRO CADASTRADO ");
 					break;
 				case 4:
 					//case para imprimir os clientes cadastrados
-					for(Pessoa p : pessoas)
+					/*for(Pessoa p : pessoas)
 					{
 						if(p instanceof PessoaFisica) 
 							((PessoaFisica) p).printPessoaFisica();
 						if(p instanceof PessoaJuridica)
 							((PessoaJuridica) p).printPessoaJuridica();
-					}
+					}*/
+					ut.lerArqCliente();
 					break;
 				case 5:
 					//case para imprimir os carros cadastrados
-					for(Carros c : carro)
-						c.printCarro();
+					/*for(Carros c : carro)
+						c.printCarro(); */
+					ut.lerArqCarro();
 					break;
 				case 6:
 					//case para buscar cliente
 					System.out.println("Entre com o nome do Cliente:");
 					String n = leitor.next();
-					utilidades u = new utilidades();
+					/*utilidades u = new utilidades();
 					Pessoa pe = u.buscaCliente(pessoas, n);
 					if(pe == null)
-						break;
+						break; */
+					ut.busca(n);
 					break;
 				case 7:
 					//case para buscar o carro
@@ -111,6 +124,7 @@ public class main {
 						break;
 					break;
 				case 8:
+					//case para alugar o carro
 					System.out.println("Entre com o nome do Cliente:");
 					String n2 = leitor.next();
 					utilidades u3 = new utilidades();
@@ -131,10 +145,12 @@ public class main {
 					{
 						double val = corr.getValorPendente();
 						pes.setValorPendencia(val);
+						System.out.println("TEEEESSSTEEEEEE !!!!");
 					}
 					
 					break;
 				case 9:
+					//case para devolver o carro
 					System.out.println("Entre com o Modelo:");
 					String model = leitor.next();
 					utilidades u5 = new utilidades();
@@ -152,12 +168,16 @@ public class main {
 					System.out.println("Quilometragem final");
 					int qf = leitor.nextInt();
 					
+					c2.calculaValorDiaria();
+					
 					c2.devolverCarro(qf, ini, fim, pago);
+					
 					break;
 				default:
 					System.out.println("ENCERRADO !!");
 					flag = false;
 			}
+			//leitor.close();
 		}
 		
 		//PessoaFisica pf = new PessoaFisica("harison", "Goiabal", "24999162280", "11989685272");

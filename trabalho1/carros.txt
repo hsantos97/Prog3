@@ -1,0 +1,12 @@
+uno
+2021
+qwe-987
+100
+true
+novo
+corola
+2019
+asd-654
+600
+true
+semi-novo

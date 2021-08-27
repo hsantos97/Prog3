@@ -127,13 +127,15 @@ public class Carros implements CalculaValor {
         long dt = (d2.getTime() - d1.getTime()) + 3600000; // 1 hora para compensar horário de verão
         System.out.println ("Dias com o carro:"+dt / 86400000L);
         double valorPendente =(dt / 86400000L)*(this.taxaDiaria);
-        System.out.println ("valor a pagar:"+valorPendente);
+        //System.out.println ("valor a pagar:"+valorPendente);
         
         //sett na pendencia, caso pago = 0 quer dizer que o cliente pagou o carro e não vai ficar com pendencia
         if(pago == 0)
         	setValorPendente(0.0);
         else
         	setValorPendente(valorPendente);
+        
+        System.out.println ("valor a pagar:"+valorPendente);
         
         //colocando o carro disponivel novamente
         setSituacao(true);

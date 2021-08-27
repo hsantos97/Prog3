@@ -82,8 +82,8 @@ public class main {
 					
 					Carros c3 = new Carros(placa, ano, modelo, quilometragem, situacao, txDiaria, observacao);
 					ut.escreveArqCarro(c3);
-					
-					carro.add(new Carros(placa, ano, modelo, quilometragem, situacao, txDiaria, observacao));
+					carro = ut.getCarroTxt();//atualizar os carros no txt
+					//carro.add(new Carros(placa, ano, modelo, quilometragem, situacao, txDiaria, observacao));
 					
 					System.out.println("CARRO CADASTRADO ");
 					break;
@@ -112,13 +112,14 @@ public class main {
 					Pessoa pe = u.buscaCliente(pessoas, n);
 					if(pe == null)
 						break; */
-					ut.busca(n);
+					System.out.println(ut.busca(n));
 					break;
 				case 7:
 					//case para buscar o carro
 					System.out.println("Entre com o Modelo:");
 					String mod = leitor.next();
 					utilidades u2 = new utilidades();
+					carro = u2.getCarroTxt();
 					Carros co = u2.buscaCarro(carro, mod);
 					if(co == null)
 						break;

@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -40,7 +42,7 @@ public class utilidades {
 			{
 				//c.calculaValorDiaria();
 				c.printCarro();
-				System.out.println("valor pendente:"+c.getValorPendente());
+				//System.out.println("valor pendente:"+c.getValorPendente());
 				return c;
 			}
 		}
@@ -76,7 +78,9 @@ public class utilidades {
 		{
 			FileWriter fileWriter = new FileWriter("cliente.txt", true);
 			PrintWriter printWriter = new PrintWriter(fileWriter);
-			printWriter.println(pf.getNome()+" "+pf.getEndereco()+" "+pf.getTelefone()+" "+pf.getCpf()+" "+pf.getValorPendencia());
+			printWriter.printf("%s %s %s %s %.2f", pf.getNome(), pf.getEndereco(), pf.getTelefone(), pf.getCpf(), 
+					pf.getValorPendencia());
+			//printWriter.println(pf.getNome()+" "+pf.getEndereco()+" "+pf.getTelefone()+" "+pf.getCpf()+" "+pf.getValorPendencia());
 			/*printWriter.println(pf.getEndereco());
 			printWriter.println(pf.getTelefone());
 			printWriter.println(pf.getCpf());
@@ -99,8 +103,10 @@ public class utilidades {
 		{
 			FileWriter fileWriter = new FileWriter("cliente.txt", true);
 			PrintWriter printWriter = new PrintWriter(fileWriter);
-			printWriter.println(pj.getNome()+" "+pj.getEndereco()+" "+pj.getTelefone()+" "+pj.getCnpj()
-			+" "+pj.getRazaoSocial()+" "+pj.getValorPendencia());
+			printWriter.printf("%s %s %s %s %s %.2f", pj.getNome(), pj.getEndereco(), pj.getTelefone(), pj.getCnpj(), 
+					pj.getRazaoSocial(), pj.getValorPendencia());
+			/*printWriter.println(pj.getNome()+" "+pj.getEndereco()+" "+pj.getTelefone()+" "+pj.getCnpj()
+			+" "+pj.getRazaoSocial()+" "+pj.getValorPendencia()); */
 			//printWriter.println(pj.getEndereco());
 			//printWriter.println(pj.getTelefone());
 			//printWriter.println(pj.getCnpj());
@@ -124,8 +130,10 @@ public class utilidades {
 		{
 			FileWriter fileWriter = new FileWriter("carros.txt", true);
 			PrintWriter printWriter = new PrintWriter(fileWriter);
-			printWriter.println(c.getModelo()+" "+c.getAno()+" "+c.getPlaca()+" "+c.getQuilometragem()+" "+c.getSituacao()
-					+" "+c.getObservacoes());
+			/*printWriter.println(c.getModelo()+" "+c.getAno()+" "+c.getPlaca()+" "+c.getQuilometragem()+" "+c.getSituacao()
+					+" "+c.getObservacoes()); */
+			printWriter.printf("%s %d %s %d %b %.2f %s %n", c.getPlaca(), c.getAno(), c.getModelo(), 
+					c.getQuilometragem(), c.getSituacao(), c.getTaxaDiaria(), c.getObservacoes());
 			/*printWriter.println(c.getAno());
 			printWriter.println(c.getPlaca());
 			printWriter.println(c.getQuilometragem());
@@ -165,6 +173,7 @@ public class utilidades {
 	        // posicao do loop para a variavel linha.
 	        while ( ( linha = bufferedReader.readLine() ) != null) {
 	        //Aqui imprimimos a linha
+	        	
 	        System.out.println(linha);
 	    }
 			//liberamos o fluxo dos objetos ou fechamos o arquivo
@@ -207,38 +216,50 @@ public class utilidades {
 	    }
 	}
 	
-	public void busca(String nome)
+	public String busca(String nome) {
+		try {
+			FileReader reader = new FileReader("cliente.txt");
+			BufferedReader leitor = new BufferedReader(reader);
+			String linha = "";
+			
+
+			while(true) {
+				linha = leitor.readLine();
+				if( linha == null ) {
+					break;
+				}
+				if( linha.matches(nome) ) {
+					return linha;
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "texto não encontrado";
+	}
+	
+	public ArrayList<Carros> getCarroTxt()
 	{
 		File dir = new File("/home/harison/Documents/prog3/Prog3/trabalho1");
-		File arq = new File(dir, "cliente.txt");
+		File arq = new File(dir, "carros.txt");
+		ArrayList<Carros> car = new ArrayList<>();
 		
 		try {
-	        //Indicamos o arquivo que será lido
-	        FileReader fileReader = new FileReader(arq);
-
-	        //Criamos o objeto bufferReader que nos
-	        // oferece o método de leitura readLine()
-	        BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-	        //String que irá receber cada linha do arquivo
-	        String linha = "";
-
-	        //Fazemos um loop linha a linha no arquivo,
-	        // enquanto ele seja diferente de null.
-	        //O método readLine() devolve a linha na
-	        // posicao do loop para a variavel linha.
-	        while ( ( linha = bufferedReader.readLine() ) != null) {
-	        //Aqui imprimimos a linha
-	        	if(bufferedReader.readLine().equalsIgnoreCase(nome))
-	        		System.out.println(linha);
-	        	else
-	        		System.out.println("CLIENTE NÃO ENCONTRADO !!");
-	    }
-			//liberamos o fluxo dos objetos ou fechamos o arquivo
-	        fileReader.close();
-	        bufferedReader.close();
-		} catch (IOException e) {
-	    	e.printStackTrace();
-	    }
+			Scanner arquivo = new Scanner(new FileReader(arq));
+			while(arquivo.hasNextLine())
+			{
+				String linha = arquivo.nextLine();
+				//System.out.println(linha);
+				String[] itens = linha.split(" ");
+				
+				car.add(new Carros(itens[0], Integer.parseInt(itens[1]), itens[2], Integer.parseInt(itens[3]), 
+						Boolean.parseBoolean(itens[4]), Double.parseDouble(itens[5]), itens[6]));
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return car;
 	}
 }

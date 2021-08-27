@@ -37,7 +37,7 @@ public class Carros implements CalculaValor {
 	//getts
 	public String getPlaca() { return this.placa; }
 	public int getAno() { return this.ano; }
-	public String modelo() { return this.modelo; }
+	public String getModelo() { return this.modelo; }
 	public int getQuilometragem() { return this.quilometragem; }
 	public boolean getSituacao() { return this.situacao; }
 	public double getTaxaDiaria() { return this.taxaDiaria; }

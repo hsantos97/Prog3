@@ -16,12 +16,13 @@ public class main {
 		
 		while(flag)
 		{
-			System.out.printf("1-Cadastrar Pf\n2-Cadastrar Pj\n3-Cadastrar Carro\n4-Print PF\n5-Print PJ");
+			System.out.printf("1-Cadastrar Pf\n2-Cadastrar Pj\n3-Cadastrar Carro\n4-Print Clientes Cadastrados\n"
+					+ "5-Print Carros cadastrados\n6-Buscar Cliente\n7-Buscar Carro\n8-Alugar\n9-Devolver");
 			op = leitor.nextInt();
 			switch(op)
 			{
 				case 1:
-					//case pegar os dados de PF
+					//case pegar os dados de PF para cadastro
 					System.out.println("Entre com o nome: ");
 					String nome = leitor.next();
 					System.out.println("Entre com o endereco: ");
@@ -34,7 +35,7 @@ public class main {
 					System.out.println("PF CADASTRADO ");
 					break;
 				case 2:
-					//case pegar os dados de PJ
+					//case pegar os dados de PJ para cadastro
 					System.out.println("Entre com o nome: ");
 					String nomePj = leitor.next();
 					System.out.println("Entre com o endereco: ");
@@ -77,15 +78,82 @@ public class main {
 					System.out.println("CARRO CADASTRADO ");
 					break;
 				case 4:
-					/*for(int i = 0; i < pessoas.size(); i++)
+					//case para imprimir os clientes cadastrados
+					for(Pessoa p : pessoas)
 					{
-						pessoas.indexOf(i);
-							
-					}*/
-					for(PessoaFisica pf : pessoas)
-					{
-						pf.printPessoaFisica();
+						if(p instanceof PessoaFisica) 
+							((PessoaFisica) p).printPessoaFisica();
+						if(p instanceof PessoaJuridica)
+							((PessoaJuridica) p).printPessoaJuridica();
 					}
+					break;
+				case 5:
+					//case para imprimir os carros cadastrados
+					for(Carros c : carro)
+						c.printCarro();
+					break;
+				case 6:
+					//case para buscar cliente
+					System.out.println("Entre com o nome do Cliente:");
+					String n = leitor.next();
+					utilidades u = new utilidades();
+					Pessoa pe = u.buscaCliente(pessoas, n);
+					if(pe == null)
+						break;
+					break;
+				case 7:
+					//case para buscar o carro
+					System.out.println("Entre com o Modelo:");
+					String mod = leitor.next();
+					utilidades u2 = new utilidades();
+					Carros co = u2.buscaCarro(carro, mod);
+					if(co == null)
+						break;
+					break;
+				case 8:
+					System.out.println("Entre com o nome do Cliente:");
+					String n2 = leitor.next();
+					utilidades u3 = new utilidades();
+					Pessoa pes = u3.buscaCliente(pessoas, n2);
+					if(pes == null)
+						break;
+					
+					System.out.println("Entre com o Modelo:");
+					String modol = leitor.next();
+					utilidades u4 = new utilidades();
+					Carros corr = u4.buscaCarro(carro, modol);
+					if(corr == null)
+						break;
+					
+					//corr.alugarCarro(pes.getPendencia());
+					
+					if(corr.alugarCarro(pes.getPendencia()))
+					{
+						double val = corr.getValorPendente();
+						pes.setValorPendencia(val);
+					}
+					
+					break;
+				case 9:
+					System.out.println("Entre com o Modelo:");
+					String model = leitor.next();
+					utilidades u5 = new utilidades();
+					Carros c2 = u5.buscaCarro(carro, model);
+					
+					System.out.println("Data do aluguel:");
+					String ini = leitor.next();
+					
+					System.out.println("Data da entrega:");
+					String fim = leitor.next();
+					
+					System.out.println("Cliente Pagou ? (sim) 0 (não) 1");
+					int pago = leitor.nextInt();
+					
+					System.out.println("Quilometragem final");
+					int qf = leitor.nextInt();
+					
+					c2.devolverCarro(qf, ini, fim, pago);
+					break;
 				default:
 					System.out.println("ENCERRADO !!");
 					flag = false;

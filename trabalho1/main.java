@@ -16,6 +16,8 @@ public class main {
 		
 		utilidades ut = new utilidades();
 		ut.criaArqTxt();
+		pessoas = ut.getPessoaTxt();
+		carro = ut.getCarroTxt();
 		
 		while(flag)
 		{
@@ -34,6 +36,11 @@ public class main {
 					String telefone = leitor.next();
 					System.out.println("Entre com o cpf: ");
 					String cpf = leitor.next();
+					if(ut.verificar(pessoas, cpf))
+					{
+						System.out.println("CPF JA EXISTENTE");
+						break;
+					}
 					PessoaFisica pf = new PessoaFisica(nome, endereco, telefone, cpf);
 					ut.escreveArqPf(pf);//passando o objeto pf, para escrever no arquivo
 					ut.getPessoaTxt();//atualizar o arquivo txt
@@ -50,6 +57,11 @@ public class main {
 					String telefonePj = leitor.next();
 					System.out.println("Entre com o cnpj: ");
 					String cnpj = leitor.next();
+					if(ut.verificar(pessoas, cnpj))
+					{
+						System.out.println("CNPJ JA CADASTRADO !!");
+						break;
+					}
 					System.out.println("Entre com o Razao Social: ");
 					String razaoSocial = leitor.next();
 					PessoaJuridica pj = new PessoaJuridica(nomePj, enderecoPj, telefonePj, cnpj, razaoSocial);
@@ -64,7 +76,12 @@ public class main {
 					System.out.println("Entre com o Modelo: ");
 					String modelo = leitor.next();
 					System.out.println("Entre com a placa: ");
-					String placa = leitor.next();					
+					String placa = leitor.next();
+					if(ut.verificarCarro(carro, placa))
+					{
+						System.out.print("CARRO JA CADASTRADO !!");
+						break;
+					}
 					System.out.println("Entre com as observações: ");
 					String observacao = leitor.next();
 					System.out.println("Entre com o ano: ");
@@ -141,14 +158,11 @@ public class main {
 					if(corr == null)
 						break;
 					
-					//corr.alugarCarro(pes.getPendencia());
 					
 					if(corr.alugarCarro(pes.getPendencia()))
 					{
-						corr.setSituacao(false);
-						System.out.println("Tesssteee: "+corr.getSituacao());
-						
-						ut.escreveArqAlugueis(pes, corr, true);	
+						ut.atualizaTxt(carro, corr);
+						carro = ut.getCarroTxt();
 						/*double val = corr.getValorPendente();
 						pes.setValorPendencia(val);
 						System.out.println("TEEEESSSTEEEEEE !!!! : "+val);*/

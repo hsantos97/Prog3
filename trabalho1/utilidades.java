@@ -85,11 +85,6 @@ public class utilidades {
 			PrintWriter printWriter = new PrintWriter(fileWriter);
 			printWriter.printf("%s %s %s %s %.2f %n", pf.getNome(), pf.getEndereco(), pf.getTelefone(), pf.getCpf(), 
 					pf.getValorPendencia());
-			//printWriter.println(pf.getNome()+" "+pf.getEndereco()+" "+pf.getTelefone()+" "+pf.getCpf()+" "+pf.getValorPendencia());
-			/*printWriter.println(pf.getEndereco());
-			printWriter.println(pf.getTelefone());
-			printWriter.println(pf.getCpf());
-			printWriter.println(pf.getValorPendencia()); */
 			
 			//o método flush libera a escrita no arquivo
             printWriter.flush();
@@ -110,13 +105,6 @@ public class utilidades {
 			PrintWriter printWriter = new PrintWriter(fileWriter);
 			printWriter.printf("%s %s %s %s %s %.2f %n", pj.getNome(), pj.getEndereco(), pj.getTelefone(), pj.getRazaoSocial(), 
 					pj.getCnpj(), pj.getValorPendencia());
-			/*printWriter.println(pj.getNome()+" "+pj.getEndereco()+" "+pj.getTelefone()+" "+pj.getCnpj()
-			+" "+pj.getRazaoSocial()+" "+pj.getValorPendencia()); */
-			//printWriter.println(pj.getEndereco());
-			//printWriter.println(pj.getTelefone());
-			//printWriter.println(pj.getCnpj());
-			//printWriter.println(pj.getRazaoSocial());
-			//printWriter.println(pj.getValorPendencia());
 			
 			//o método flush libera a escrita no arquivo
             printWriter.flush();
@@ -135,16 +123,9 @@ public class utilidades {
 		{
 			FileWriter fileWriter = new FileWriter("carros.txt", true);
 			PrintWriter printWriter = new PrintWriter(fileWriter);
-			/*printWriter.println(c.getModelo()+" "+c.getAno()+" "+c.getPlaca()+" "+c.getQuilometragem()+" "+c.getSituacao()
-					+" "+c.getObservacoes()); */
 			printWriter.printf("%s %d %s %d %b %.2f %s %n", c.getPlaca(), c.getAno(), c.getModelo(), 
 					c.getQuilometragem(), c.getSituacao(), c.getTaxaDiaria(), c.getObservacoes());
-			/*printWriter.println(c.getAno());
-			printWriter.println(c.getPlaca());
-			printWriter.println(c.getQuilometragem());
-			printWriter.println(c.getSituacao());
-			printWriter.println(c.getObservacoes()); */
-			
+		
 			//o método flush libera a escrita no arquivo
             printWriter.flush();
             
@@ -284,7 +265,7 @@ public class utilidades {
 				if(itens.length == 5)
 					pe.add(new PessoaFisica(itens[0], itens[1], itens[2], itens[3]));
 				else if(itens.length == 6)
-					pe.add(new PessoaJuridica(itens[0], itens[1], itens[2], itens[3], itens[4]));
+					pe.add(new PessoaJuridica(itens[0], itens[1], itens[2], itens[4], itens[3]));
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -319,5 +300,67 @@ public class utilidades {
 		{
 			e.printStackTrace();
 		}	
+	}
+	
+	public boolean verificar(ArrayList<Pessoa> pessoa, String documento)
+	{
+		for(Pessoa p : pessoa)
+		{
+			if(p instanceof PessoaFisica)
+			{
+				if(documento.equals(((PessoaFisica) p).getCpf()))
+					return true;
+			}
+			if(p instanceof PessoaJuridica)
+			{
+				if(documento.equals(((PessoaJuridica) p).getCnpj()))
+					return true;
+			}
+		}
+		return false;	
+	}
+	
+	public boolean verificarCarro(ArrayList<Carros> carros, String placa)
+	{
+		for(Carros c : carros)
+		{
+			if(placa.equals(c.getPlaca()))
+					return true;
+		}
+		return false;	
+	}
+	
+	public void atualizaTxt(ArrayList<Carros> carros, Carros c)
+	{
+		for(int i = 0; i <= carros.size()-1; i++)
+		{	
+			Carros aux = carros.get(i);
+			aux = carros.get(i);
+			if(c.getPlaca().equals(aux.getPlaca()))
+				carros.set(i, c);	
+		}
+		
+		try 
+		{
+			FileWriter fileWriter = new FileWriter("carros.txt", false);
+			PrintWriter printWriter = new PrintWriter(fileWriter);
+			for(Carros car : carros)
+			{
+				printWriter.printf("%s %d %s %d %b %.2f %s %n", car.getPlaca(), car.getAno(), car.getModelo(), 
+					car.getQuilometragem(), car.getSituacao(), car.getTaxaDiaria(), car.getObservacoes());
+				
+				//o método flush libera a escrita no arquivo
+	            printWriter.flush();
+			}
+				
+	            
+			//No final precisamos fechar o arquivo
+            printWriter.close();
+	            
+		} catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		System.out.println("deu certo");
 	}
 }

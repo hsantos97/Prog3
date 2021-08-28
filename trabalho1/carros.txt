@@ -1,4 +1,4 @@
-qwe-963 2021 uno 100 true 10.00 novo 
-asd-698 2019 corola 600 true 9.74 semi-novo 
-zxc-987 2010 civic 1000 true 6.50 velho 
-qw-we9 2005 vectra 1500 false 5.85 velho 
+qwe-474 2015 gol 500 true 25.00 aasd  
+asd-654 2016 vectra 300 true 12.00 asdsf 
+zxc-987 2021 uno 100 false 20.00 asdasd 
+vxc-258 2021 ranger 50 true 60.00 novo 

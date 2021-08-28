@@ -19,6 +19,7 @@ public class Carros implements CalculaValor {
 	//private double taxaPorKm;
 	private String observacoes;
 	private double valorPendente;
+	private String dataAluguel;
 	
 	//construtor
 	public Carros(String placa, int ano, String modelo, int quilometragem, boolean situacao, double taxaDiaria, String observacoes)
@@ -44,6 +45,7 @@ public class Carros implements CalculaValor {
 	//public double getTaxaPorKm() { return this.taxaPorKm; }
 	public String getObservacoes() { return this.observacoes; }
 	public double getValorPendente() { return this.valorPendente; }
+	public String getDataAluguel() { return this.dataAluguel; }
 	
 	//sets
 	public void setQuilometragem(int quilometragem) { this.quilometragem += quilometragem; }
@@ -146,10 +148,14 @@ public class Carros implements CalculaValor {
 		if(this.situacao && !pendencia)
 		{
 			System.out.println("Carro alugado !!");
-			Date data = new Date();
-			DateFormat df = new SimpleDateFormat ("dd/MM/yyyy");
-			df.format( data );
-			System.out.println("Data do aluguel: "+data);
+			Date data = new Date(System.currentTimeMillis()); 
+			SimpleDateFormat formatarDate = new SimpleDateFormat("dd/MM/yyy"); 
+			System.out.println("Data do alugel: "+formatarDate.format(data));
+			//Date data = new Date();
+			//DateFormat df = new SimpleDateFormat ("dd/MM/yyyy");
+			//df.format(data);
+			//System.out.println("Data do aluguel: "+data);
+			this.dataAluguel = formatarDate.format(data);
 			setSituacao(false); //deixando o carro indisponivel
 			return true;
 		}

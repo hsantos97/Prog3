@@ -35,9 +35,9 @@ public class main {
 					System.out.println("Entre com o cpf: ");
 					String cpf = leitor.next();
 					PessoaFisica pf = new PessoaFisica(nome, endereco, telefone, cpf);
-					ut.escreveArqPf(pf);
+					ut.escreveArqPf(pf);//passando o objeto pf, para escrever no arquivo
 					ut.getPessoaTxt();//atualizar o arquivo txt
-					pessoas.add(new PessoaFisica(nome, endereco, telefone, cpf));
+					//pessoas.add(new PessoaFisica(nome, endereco, telefone, cpf)); //adicionando a pessoa fisica no arraylist
 					System.out.println("PF CADASTRADO ");
 					break;
 				case 2:
@@ -53,9 +53,9 @@ public class main {
 					System.out.println("Entre com o Razao Social: ");
 					String razaoSocial = leitor.next();
 					PessoaJuridica pj = new PessoaJuridica(nomePj, enderecoPj, telefonePj, cnpj, razaoSocial);
-					ut.escreveArqPj(pj);
-					ut.getPessoaTxt();
-					pessoas.add(new PessoaJuridica(nomePj, enderecoPj, telefonePj, cnpj, razaoSocial));
+					ut.escreveArqPj(pj); //passando o objeto pj para escrever no arquivo
+					ut.getPessoaTxt(); // atualizando o arquivo txt
+					//pessoas.add(new PessoaJuridica(nomePj, enderecoPj, telefonePj, cnpj, razaoSocial)); // adicionadno ao arraylist
 					System.out.println("PJ CADASTRADO ");
 					break;
 				case 3:
@@ -77,13 +77,13 @@ public class main {
 					String taxaDiaria = leitor.next();
 					double txDiaria = Double.parseDouble(taxaDiaria);
 					
-					if(situacoes == 1)
+					if(situacoes == 1) 
 						situacao = true;
 					else
 						situacao = false;
 					
 					Carros c3 = new Carros(placa, ano, modelo, quilometragem, situacao, txDiaria, observacao);
-					ut.escreveArqCarro(c3);
+					ut.escreveArqCarro(c3);// passando um objeto carro para escrever no arquivo
 					carro = ut.getCarroTxt();//atualizar os carros no txt
 					//carro.add(new Carros(placa, ano, modelo, quilometragem, situacao, txDiaria, observacao));
 					
@@ -120,7 +120,6 @@ public class main {
 					//case para buscar o carro
 					System.out.println("Entre com o Modelo:");
 					String mod = leitor.next();
-					//utilidades u2 = new utilidades();
 					carro = ut.getCarroTxt();
 					Carros co = ut.buscaCarro(carro, mod);
 					if(co == null)
@@ -130,15 +129,15 @@ public class main {
 					//case para alugar o carro
 					System.out.println("Entre com o nome do Cliente:");
 					String n2 = leitor.next();
-					utilidades u3 = new utilidades();
-					Pessoa pes = u3.buscaCliente(pessoas, n2);
+					pessoas = ut.getPessoaTxt();
+					Pessoa pes = ut.buscaCliente(pessoas, n2);
 					if(pes == null)
 						break;
 					
 					System.out.println("Entre com o Modelo:");
 					String modol = leitor.next();
-					utilidades u4 = new utilidades();
-					Carros corr = u4.buscaCarro(carro, modol);
+					carro = ut.getCarroTxt();
+					Carros corr = ut.buscaCarro(carro, modol);
 					if(corr == null)
 						break;
 					
@@ -146,10 +145,16 @@ public class main {
 					
 					if(corr.alugarCarro(pes.getPendencia()))
 					{
-						double val = corr.getValorPendente();
+						corr.setSituacao(false);
+						System.out.println("Tesssteee: "+corr.getSituacao());
+						
+						ut.escreveArqAlugueis(pes, corr, true);	
+						/*double val = corr.getValorPendente();
 						pes.setValorPendencia(val);
-						System.out.println("TEEEESSSTEEEEEE !!!!");
+						System.out.println("TEEEESSSTEEEEEE !!!! : "+val);*/
 					}
+					else
+						break;
 					
 					break;
 				case 9:

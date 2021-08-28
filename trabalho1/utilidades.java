@@ -55,11 +55,14 @@ public class utilidades {
 		java.io.File diretorio = new java.io.File("/home/harison/Documents/prog3/Prog3/trabalho1");
 		java.io.File arquivo = new java.io.File(diretorio, "cliente.txt");
 		java.io.File arquivo2 = new java.io.File(diretorio, "carros.txt");
+		java.io.File arquivo3 = new java.io.File(diretorio, "alugueis.txt");
 		try {
-			boolean statusArq = arquivo.createNewFile();
+			boolean statusArq = arquivo.createNewFile(); //criando o arquivo fisico
 			boolean statusArq2 = arquivo2.createNewFile();
+			boolean statusArq3 = arquivo3.createNewFile();
 			System.out.print(statusArq);
-			System.out.print(statusArq2);
+			System.out.print(statusArq2); 
+			System.out.print(statusArq3);
 		} catch (IOException e) {
 		    e.printStackTrace(); 
 		}
@@ -68,6 +71,8 @@ public class utilidades {
 		    if (arquivo.exists())
 		    	System.out.println("Arquivo existe!");
 		    if(arquivo2.exists())
+		    	System.out.println("Arquivo existe!");
+		    if(arquivo3.exists())
 		    	System.out.println("Arquivo existe!");
 		}	
 	}
@@ -216,7 +221,7 @@ public class utilidades {
 	    }
 	}
 	
-	public String busca(String nome) {
+	/*public String busca(String nome) {
 		try {
 			FileReader reader = new FileReader("cliente.txt");
 			BufferedReader leitor = new BufferedReader(reader);
@@ -238,7 +243,7 @@ public class utilidades {
 			e.printStackTrace();
 		}
 		return "texto não encontrado";
-	}
+	} */
 	
 	public ArrayList<Carros> getCarroTxt()
 	{
@@ -285,5 +290,34 @@ public class utilidades {
 			e.printStackTrace();
 		}
 		return pe;
+	}
+	
+	public void escreveArqAlugueis(Pessoa p, Carros c, boolean alugar)
+	{
+		try 
+		{
+			FileWriter fileWriter = new FileWriter("alugueis.txt", true);
+			PrintWriter printWriter = new PrintWriter(fileWriter);
+			if(alugar)
+			{
+				if(p instanceof PessoaFisica)
+					printWriter.printf("%s %s %s %s %s %b %n", p.getNome(), ((PessoaFisica) p).getCpf(), 
+							c.getModelo(), c.getPlaca(), c.getDataAluguel(), c.getSituacao());
+				if(p instanceof PessoaJuridica)
+					printWriter.printf("%s %s %s %s %s %b %n", p.getNome(), ((PessoaJuridica) p).getCnpj(), 
+							c.getModelo(), c.getPlaca(), c.getDataAluguel(), c.getSituacao());
+			}
+			else
+				System.out.println("FALHA NO ALUGUEL !!");
+			
+			//o método flush libera a escrita no arquivo
+            printWriter.flush();
+            
+            //No final precisamos fechar o arquivo
+            printWriter.close();
+		} catch (IOException e) 
+		{
+			e.printStackTrace();
+		}	
 	}
 }

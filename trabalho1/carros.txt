@@ -1,3 +1,4 @@
 qwe-963 2021 uno 100 true 10.00 novo 
 asd-698 2019 corola 600 true 9.74 semi-novo 
 zxc-987 2010 civic 1000 true 6.50 velho 
+qw-we9 2005 vectra 1500 false 5.85 velho 

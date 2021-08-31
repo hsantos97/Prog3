@@ -52,7 +52,7 @@ public class utilidades {
 	
 	public void criaArqTxt()
 	{
-		java.io.File diretorio = new java.io.File("/home/harison/Documents/prog3/Prog3/trabalho1");
+		java.io.File diretorio = new java.io.File("arquivo");
 		java.io.File arquivo = new java.io.File(diretorio, "cliente.txt");
 		java.io.File arquivo2 = new java.io.File(diretorio, "carros.txt");
 		java.io.File arquivo3 = new java.io.File(diretorio, "alugueis.txt");
@@ -80,8 +80,8 @@ public class utilidades {
 	public void escreveArqPf(PessoaFisica pf)
 	{
 		try 
-		{
-			FileWriter fileWriter = new FileWriter("cliente.txt", true);
+		{	
+			FileWriter fileWriter = new FileWriter("./arquivos/cliente.txt", true);
 			PrintWriter printWriter = new PrintWriter(fileWriter);
 			printWriter.printf("%s %s %s %s %.2f %n", pf.getNome(), pf.getEndereco(), pf.getTelefone(), pf.getCpf(), 
 					pf.getValorPendencia());
@@ -121,7 +121,7 @@ public class utilidades {
 	{
 		try 
 		{
-			FileWriter fileWriter = new FileWriter("carros.txt", true);
+			FileWriter fileWriter = new FileWriter("./arquivos/carros.txt", true);
 			PrintWriter printWriter = new PrintWriter(fileWriter);
 			printWriter.printf("%s %d %s %d %b %.2f %s %n", c.getPlaca(), c.getAno(), c.getModelo(), 
 					c.getQuilometragem(), c.getSituacao(), c.getTaxaDiaria(), c.getObservacoes());
@@ -139,7 +139,7 @@ public class utilidades {
 	
 	public void lerArqCliente()
 	{
-		File dir = new File("/home/harison/Documents/prog3/Prog3/trabalho1");
+		File dir = new File("arquivos");
 		File arq = new File(dir, "cliente.txt");
 		
 		try {
@@ -172,7 +172,7 @@ public class utilidades {
 	
 	public void lerArqCarro()
 	{
-		File dir = new File("/home/harison/Documents/prog3/Prog3/trabalho1");
+		File dir = new File("arquivos");
 		File arq = new File(dir, "carros.txt");
 		
 		try {
@@ -204,7 +204,7 @@ public class utilidades {
 
 	public ArrayList<Carros> getCarroTxt()
 	{
-		File dir = new File("/home/harison/Documents/prog3/Prog3/trabalho1");
+		File dir = new File("arquivos");
 		File arq = new File(dir, "carros.txt");
 		ArrayList<Carros> car = new ArrayList<>();
 		
@@ -227,7 +227,7 @@ public class utilidades {
 	
 	public ArrayList<Pessoa> getPessoaTxt()
 	{
-		File dir = new File("/home/harison/Documents/prog3/Prog3/trabalho1");
+		File dir = new File("arquivos");
 		File arq = new File(dir, "cliente.txt");
 		ArrayList<Pessoa> pe = new ArrayList<>();
 		
@@ -257,7 +257,7 @@ public class utilidades {
 			
 			if(alugar)
 			{
-				FileWriter fileWriter = new FileWriter("alugueis.txt", true);
+				FileWriter fileWriter = new FileWriter("./arquivos/alugueis.txt", true);
 				PrintWriter printWriter = new PrintWriter(fileWriter);
 				
 				if(p instanceof PessoaFisica)
@@ -323,7 +323,7 @@ public class utilidades {
 		
 		try 
 		{
-			FileWriter fileWriter = new FileWriter("carros.txt", false);
+			FileWriter fileWriter = new FileWriter("./arquivos/carros.txt", false);
 			PrintWriter printWriter = new PrintWriter(fileWriter);
 			for(Carros car : carros)
 			{
@@ -454,7 +454,7 @@ public class utilidades {
 	{	
 		try 
 		{
-			FileWriter fileWriter = new FileWriter("alugueis.txt", false);
+			FileWriter fileWriter = new FileWriter("./arquivos/alugueis.txt", false);
 			PrintWriter printWriter = new PrintWriter(fileWriter);
 			for(int i = 0; i < alugueis.size()-1; i++)
 			{
@@ -487,7 +487,7 @@ public class utilidades {
 	{
 		ArrayList<Aluguel> alugueis = new ArrayList<>();
 		
-		File dir = new File("/home/harison/Documents/prog3/Prog3/trabalho1");
+		File dir = new File("arquivos");
 		File arq = new File(dir, "alugueis.txt");
 		
 		try {

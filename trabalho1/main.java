@@ -19,7 +19,7 @@ public class main {
 		ut.criaArqTxt();
 		pessoas = ut.getPessoaTxt();
 		carro = ut.getCarroTxt();
-		aluguel = ut.getAlugueis(carro, pessoas); 
+		//aluguel = ut.getAlugueis(carro, pessoas); 
 		
 		while(flag)
 		{
@@ -149,6 +149,7 @@ public class main {
 					System.out.println("Entre com o nome do Cliente:");
 					String n2 = leitor.next();
 					pessoas = ut.getPessoaTxt();
+					//obter pessoas do banco
 					Pessoa pes = ut.buscaCliente(pessoas, n2);
 					if(pes == null)
 						break;
@@ -156,15 +157,28 @@ public class main {
 					System.out.println("Entre com o Modelo:");
 					String modol = leitor.next();
 					carro = ut.getCarroTxt();
+					//obter carros do banco
 					Carros corr = ut.buscaCarro(carro, modol);
 					if(corr == null)
 						break;
 					
 					Aluguel alu = new Aluguel(corr, pes);
-					aluguel = ut.getAlugueis(carro, pessoas);
-					//aluguel.add(alu);
-					System.out.println(alu.getStatus());
+					System.out.printf("Nome:%s | Modelo:%s \n",alu.getNome(),alu.getModelo());
 					
+					aluguel = ut.getAlugueis(carro, pessoas);
+					boolean test = alu.alugar();
+					if(!test){
+						System.out.printf(" Carro nao disponivel!\n");
+						break;
+					}
+					//System.out.println(alu.getStatus());
+					aluguel.add(alu);
+					System.out.printf("Tamanho array:%d |\n",aluguel.size());
+					//aluguel = ut.atualizaAluguel(aluguel,alu);
+					System.out.printf("Tamanho array:%d |\n",aluguel.size());
+					ut.atualizaTxtAluguel(aluguel);
+					aluguel = ut.getAlugueis(carro, pessoas);
+					/*
 					if(!alu.getStatus())
 					{
 						alu.alugar();
@@ -178,10 +192,11 @@ public class main {
 					}
 					else
 						break;
-					
-					//break;
+					*/
+					break;
 				case 9:
 					//case para devolver o carro
+					aluguel = ut.getAlugueis(carro, pessoas);
 					System.out.println("Entre com o Modelo:");
 					String model = leitor.next();
 					Carros c2 = ut.buscaCarro(carro, model);

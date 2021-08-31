@@ -450,17 +450,38 @@ public class utilidades {
 		return null;
 	}
 	
+	//sobrescreve txt alugueis passando array de objetos alugueis como parâmetro
 	public void atualizaTxtAluguel(ArrayList<Aluguel> alugueis)
 	{	
+		System.out.println("-> ATUALIZA TXT ALUGUEL !");
+		System.out.printf("Tamanho array:%d |\n",alugueis.size());
 		try 
 		{
 			FileWriter fileWriter = new FileWriter("./arquivos/alugueis.txt", false);
 			PrintWriter printWriter = new PrintWriter(fileWriter);
+			for (Aluguel aluguel : alugueis)
+			{
+				Pessoa p = aluguel.getPessoa();
+				Carros c = aluguel.getCarro();
+				//System.out.println("Entrou");
+				if(p instanceof PessoaFisica)
+					printWriter.printf("%s %s %s %s %s %s %n", p.getNome(), ((PessoaFisica) p).getCpf(), c.getModelo(), 
+							c.getPlaca(), c.getDataAluguel(), aluguel.getFim());
+				if(p instanceof PessoaJuridica)
+					printWriter.printf("%s %s %s %s %s %s %n", p.getNome(), ((PessoaJuridica) p).getCnpj(), c.getModelo(), 
+							c.getPlaca(), c.getDataAluguel(), aluguel.getFim());
+				
+				printWriter.flush();
+			}
+			
+			printWriter.close();
+			/*
 			for(int i = 0; i < alugueis.size()-1; i++)
 			{
 				Aluguel alu = alugueis.get(i);
 				Pessoa p = alu.getPessoa();
 				Carros c = alu.getCarro();
+				System.out.println("-> entrou!");
 				if(p instanceof PessoaFisica)
 					printWriter.printf("%s %s %s %s %s %s %n", p.getNome(), ((PessoaFisica) p).getCpf(), c.getModelo(), 
 							c.getPlaca(), c.getDataAluguel(), alu.getFim());
@@ -468,14 +489,13 @@ public class utilidades {
 					printWriter.printf("%s %s %s %s %s %s %n", p.getNome(), ((PessoaJuridica) p).getCnpj(), c.getModelo(), 
 							c.getPlaca(), c.getDataAluguel(), alu.getFim());
 					
-				System.out.println(p.getNome()+" ATUALIZA TXT ALUGUEL !");
+				System.out.println(p.getNome()+" ->ATUALIZA TXT ALUGUEL !");
 				//o método flush libera a escrita no arquivo
-	            printWriter.flush();
+				printWriter.flush();
 			}
-				
-	            
 			//No final precisamos fechar o arquivo
             printWriter.close();
+			*/
 	            
 		} catch (IOException e) 
 		{

@@ -9,12 +9,16 @@ public class Aluguel {
 	private String fim;
 	private int pago;
 	private boolean status;
+	private String nome;
+	private String modelo;
 	
 	//construtor
 	public Aluguel(Carros carro, Pessoa pessoa)
 	{
 		this.carro = carro;
 		this.pessoa = pessoa;
+		this.nome = pessoa.getNome();
+		this.modelo = carro.getModelo();
 	}
 	
 	//setts
@@ -26,6 +30,8 @@ public class Aluguel {
 	public Pessoa getPessoa() { return this.pessoa; }
 	public boolean getStatus() { return this.status; }
 	public String getFim() { return this.fim; }
+	public String getNome(){return this.nome;}
+	public String getModelo(){return this.modelo;}
 	
 	public boolean alugar()
 	{

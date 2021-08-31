@@ -1,4 +1,0 @@
-qwe-987 2021 uno 100 false 10.00 novo 
-asd-654 2020 gol 200 false 9.00 semi-novo 
-zaq-258 2015 vectra 500 false 7.00 velho 
-nhn-741 2019 corola 300 true 8.50 novo 

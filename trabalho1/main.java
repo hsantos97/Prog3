@@ -161,22 +161,25 @@ public class main {
 						break;
 					
 					Aluguel alu = new Aluguel(corr, pes);
-					//aluguel = ut.getAlugueis(carro, pessoas);
-					//ut.atualizaTxtAluguel(aluguel);
+					aluguel = ut.getAlugueis(carro, pessoas);
+					//aluguel.add(alu);
+					System.out.println(alu.getStatus());
 					
-					if(alu.alugar())
+					if(!alu.getStatus())
 					{
+						alu.alugar();
 						ut.atualizaCarroTxt(carro, corr);
-						carro = ut.getCarroTxt();
+						carro = ut.getCarroTxt();						
+						
+						//aluguel = ut.getAlugueis(carro, pessoas);
 						ut.escreveArqAlugueis(pes, corr, true);
-						aluguel.add(alu);
-						aluguel = ut.getAlugueis(carro, pessoas);
 						ut.atualizaTxtAluguel(aluguel);
+						break;
 					}
 					else
 						break;
 					
-					break;
+					//break;
 				case 9:
 					//case para devolver o carro
 					System.out.println("Entre com o Modelo:");

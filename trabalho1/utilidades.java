@@ -254,26 +254,29 @@ public class utilidades {
 	{
 		try 
 		{
-			FileWriter fileWriter = new FileWriter("alugueis.txt", true);
-			PrintWriter printWriter = new PrintWriter(fileWriter);
+			
 			if(alugar)
 			{
+				FileWriter fileWriter = new FileWriter("alugueis.txt", true);
+				PrintWriter printWriter = new PrintWriter(fileWriter);
+				
 				if(p instanceof PessoaFisica)
 					printWriter.printf("%s %s %s %s %s %n", p.getNome(), ((PessoaFisica) p).getCpf(), 
 							c.getModelo(), c.getPlaca(), c.getDataAluguel());
 				if(p instanceof PessoaJuridica)
 					printWriter.printf("%s %s %s %s %s %n", p.getNome(), ((PessoaJuridica) p).getCnpj(),
 							c.getModelo(), c.getPlaca(), c.getDataAluguel());
-
+				
+				//System.out.println(p.getNome()+" ESCREVE ALUGUEIS");
+				//o método flush libera a escrita no arquivo
+	            printWriter.flush();
+	          //No final precisamos fechar o arquivo
+	            printWriter.close();
 			}
 			else
 				System.out.println("FALHA NO ALUGUEL !!");
-			
-			//o método flush libera a escrita no arquivo
-            printWriter.flush();
             
-            //No final precisamos fechar o arquivo
-            printWriter.close();
+            
 		} catch (IOException e) 
 		{
 			e.printStackTrace();
@@ -465,7 +468,7 @@ public class utilidades {
 					printWriter.printf("%s %s %s %s %s %s %n", p.getNome(), ((PessoaJuridica) p).getCnpj(), c.getModelo(), 
 							c.getPlaca(), c.getDataAluguel(), alu.getFim());
 					
-				
+				System.out.println(p.getNome()+" ATUALIZA TXT ALUGUEL !");
 				//o método flush libera a escrita no arquivo
 	            printWriter.flush();
 			}
@@ -497,7 +500,7 @@ public class utilidades {
 				Carros c = buscaCarro(carros, itens[2]);
 				Pessoa p = buscaCliente(pessoas, itens[0]);
 				Aluguel a = new Aluguel(c, p);
-				a.alugar();
+				//a.alugar();
 				alugueis.add(a);
 			}
 			return alugueis;

@@ -68,7 +68,7 @@ public class main {
 					String razaoSocial = leitor.next();
 					PessoaJuridica pj = new PessoaJuridica(nomePj, enderecoPj, telefonePj, razaoSocial, cnpj);
 					ut.escreveArqPj(pj); //passando o objeto pj para escrever no arquivo
-					ut.getPessoaTxt(); // atualizando o arquivo txt
+					pessoas = ut.getPessoaTxt(); // atualizando o arquivo txt
 					//pessoas.add(new PessoaJuridica(nomePj, enderecoPj, telefonePj, cnpj, razaoSocial)); // adicionadno ao arraylist
 					System.out.println("PJ CADASTRADO ");
 					break;
@@ -196,7 +196,8 @@ public class main {
 					break;
 				case 9:
 					//case para devolver o carro
-					aluguel = ut.getAlugueis(carro, pessoas);
+					//aluguel = ut.getAlugueis(carro, pessoas);
+					System.out.printf("Tamanho array:%d |\n",aluguel.size());
 					System.out.println("Entre com o Modelo:");
 					String model = leitor.next();
 					Carros c2 = ut.buscaCarro(carro, model);
@@ -234,12 +235,11 @@ public class main {
 					alu2.devolverCarro(qf, ini, fim, n3, model, pago);
 					
 					aluguel = ut.atualizaAluguel(aluguel, alu2);
-					ut.atualizaTxtAluguel(aluguel);
-					
 					break;
 				default:
 					System.out.println("ENCERRADO !!");
 					flag = false;
+					break;
 			}
 
 		}

@@ -101,7 +101,7 @@ public class utilidades {
 	{
 		try 
 		{
-			FileWriter fileWriter = new FileWriter("cliente.txt", true);
+			FileWriter fileWriter = new FileWriter("./arquivos/cliente.txt", true);
 			PrintWriter printWriter = new PrintWriter(fileWriter);
 			printWriter.printf("%s %s %s %s %s %.2f %n", pj.getNome(), pj.getEndereco(), pj.getTelefone(), pj.getRazaoSocial(), 
 					pj.getCnpj(), pj.getValorPendencia());
@@ -359,7 +359,7 @@ public class utilidades {
 		
 			try 
 			{
-				FileWriter fileWriter = new FileWriter("cliente.txt", false);
+				FileWriter fileWriter = new FileWriter("./arquivos/cliente.txt", false);
 				PrintWriter printWriter = new PrintWriter(fileWriter);
 				for(Pessoa pf : pessoas)
 				{

@@ -445,9 +445,8 @@ public class utilidades {
 				alugueis.set(i, aluguel);
 				return alugueis;
 			}
-
 		}
-		return null;
+		return alugueis;
 	}
 	
 	//sobrescreve txt alugueis passando array de objetos alugueis como parâmetro

@@ -235,6 +235,7 @@ public class main {
 					alu2.devolverCarro(qf, ini, fim, n3, model, pago);
 					
 					aluguel = ut.atualizaAluguel(aluguel, alu2);
+					ut.atualizaTxtAluguel(aluguel);
 					break;
 				default:
 					System.out.println("ENCERRADO !!");

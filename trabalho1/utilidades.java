@@ -201,31 +201,7 @@ public class utilidades {
 	    	e.printStackTrace();
 	    }
 	}
-	
-	/*public String busca(String nome) {
-		try {
-			FileReader reader = new FileReader("cliente.txt");
-			BufferedReader leitor = new BufferedReader(reader);
-			String linha = "";
-			
 
-			while(true) {
-				linha = leitor.readLine();
-				if( linha == null ) {
-					break;
-				}
-				if( linha.matches(nome) ) {
-					return linha;
-				}
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return "texto não encontrado";
-	} */
-	
 	public ArrayList<Carros> getCarroTxt()
 	{
 		File dir = new File("/home/harison/Documents/prog3/Prog3/trabalho1");
@@ -265,7 +241,8 @@ public class utilidades {
 				if(itens.length == 5)
 					pe.add(new PessoaFisica(itens[0], itens[1], itens[2], itens[3]));
 				else if(itens.length == 6)
-					pe.add(new PessoaJuridica(itens[0], itens[1], itens[2], itens[4], itens[3]));
+					pe.add(new PessoaJuridica(itens[0], itens[1], itens[2], itens[3], itens[4]));
+
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -282,11 +259,12 @@ public class utilidades {
 			if(alugar)
 			{
 				if(p instanceof PessoaFisica)
-					printWriter.printf("%s %s %s %s %s %b %n", p.getNome(), ((PessoaFisica) p).getCpf(), 
-							c.getModelo(), c.getPlaca(), c.getDataAluguel(), c.getSituacao());
+					printWriter.printf("%s %s %s %s %s %n", p.getNome(), ((PessoaFisica) p).getCpf(), 
+							c.getModelo(), c.getPlaca(), c.getDataAluguel());
 				if(p instanceof PessoaJuridica)
-					printWriter.printf("%s %s %s %s %s %b %n", p.getNome(), ((PessoaJuridica) p).getCnpj(), 
-							c.getModelo(), c.getPlaca(), c.getDataAluguel(), c.getSituacao());
+					printWriter.printf("%s %s %s %s %s %n", p.getNome(), ((PessoaJuridica) p).getCnpj(),
+							c.getModelo(), c.getPlaca(), c.getDataAluguel());
+
 			}
 			else
 				System.out.println("FALHA NO ALUGUEL !!");
@@ -330,7 +308,7 @@ public class utilidades {
 		return false;	
 	}
 	
-	public void atualizaTxt(ArrayList<Carros> carros, Carros c)
+	public void atualizaCarroTxt(ArrayList<Carros> carros, Carros c)
 	{
 		for(int i = 0; i <= carros.size()-1; i++)
 		{	
@@ -430,6 +408,105 @@ public class utilidades {
 				e.printStackTrace();
 			}
 		}
+		
+	}
+	
+	public Aluguel buscaAluguel(ArrayList<Aluguel> alugueis, String nome, String modelo)
+	{
+		for(Aluguel aluguel : alugueis)
+		{
+			Pessoa pessoa;
+			Carros carro;
+			pessoa = aluguel.getPessoa();
+			carro = aluguel.getCarro();
+			if((pessoa.getNome().equals(nome)) && (carro.getModelo().equals(modelo)))	
+				return aluguel;
+
+		}
+		return null;	
+	}
+	
+	public ArrayList<Aluguel> atualizaAluguel(ArrayList<Aluguel> alugueis, Aluguel aluguel)
+	{
+		for(int i = 0; i < alugueis.size()-1; i++)
+		{
+			Pessoa pessoa, pessoa2;
+			Carros carro, carro2;
+			Aluguel alu = alugueis.get(i);
+			pessoa2 = alu.getPessoa();
+			carro2 = alu.getCarro();
+			pessoa = aluguel.getPessoa();
+			carro = aluguel.getCarro();
+			if((pessoa.getNome().equals(pessoa2.getNome())) && (carro.getModelo().equals(carro2.getModelo())))
+			{
+				alugueis.set(i, aluguel);
+				return alugueis;
+			}
+
+		}
+		return null;
+	}
+	
+	public void atualizaTxtAluguel(ArrayList<Aluguel> alugueis)
+	{	
+		try 
+		{
+			FileWriter fileWriter = new FileWriter("alugueis.txt", false);
+			PrintWriter printWriter = new PrintWriter(fileWriter);
+			for(int i = 0; i < alugueis.size()-1; i++)
+			{
+				Aluguel alu = alugueis.get(i);
+				Pessoa p = alu.getPessoa();
+				Carros c = alu.getCarro();
+				if(p instanceof PessoaFisica)
+					printWriter.printf("%s %s %s %s %s %s %n", p.getNome(), ((PessoaFisica) p).getCpf(), c.getModelo(), 
+							c.getPlaca(), c.getDataAluguel(), alu.getFim());
+				if(p instanceof PessoaJuridica)
+					printWriter.printf("%s %s %s %s %s %s %n", p.getNome(), ((PessoaJuridica) p).getCnpj(), c.getModelo(), 
+							c.getPlaca(), c.getDataAluguel(), alu.getFim());
+					
+				
+				//o método flush libera a escrita no arquivo
+	            printWriter.flush();
+			}
+				
+	            
+			//No final precisamos fechar o arquivo
+            printWriter.close();
+	            
+		} catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public ArrayList<Aluguel> getAlugueis(ArrayList<Carros> carros, ArrayList<Pessoa> pessoas)
+	{
+		ArrayList<Aluguel> alugueis = new ArrayList<>();
+		
+		File dir = new File("/home/harison/Documents/prog3/Prog3/trabalho1");
+		File arq = new File(dir, "alugueis.txt");
+		
+		try {
+			Scanner arquivo = new Scanner(new FileReader(arq));
+			while(arquivo.hasNextLine())
+			{
+				String linha = arquivo.nextLine();
+				String[] itens = linha.split(" ");
+				
+				Carros c = buscaCarro(carros, itens[2]);
+				Pessoa p = buscaCliente(pessoas, itens[0]);
+				Aluguel a = new Aluguel(c, p);
+				a.alugar();
+				alugueis.add(a);
+			}
+			return alugueis;
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 		
 	}
 }

@@ -54,6 +54,7 @@ public class Carros implements CalculaValor {
 	//public void setTaxaPorKm(double taxaPorKm) { this.taxaPorKm = taxaPorKm; }
 	public void setObservacoes(String observacoes) { this.observacoes = observacoes; }
 	public void setValorPendente(double valorPendente) { this.valorPendente = valorPendente; }
+	public void setDataAluguel(String dataAluguel) { this.dataAluguel = dataAluguel; }
 	
 	public void printCarro()
 	{
@@ -104,14 +105,14 @@ public class Carros implements CalculaValor {
 		
 	} */
 	
-	public void devolverCarro(int quilometragem, String inicio, String fim, int pago)
+	/*public void devolverCarro(int quilometragem, String inicio, String fim, int pago)
 	{
 		int quilometragemAndada = (quilometragem - getQuilometragem());
 		setQuilometragem(quilometragemAndada);
 		System.out.printf("Quilometragem atualizada: %dKm\nQuilometros andados:%dKm\n", getQuilometragem(), quilometragemAndada);
 		
 		/* diferença de dias entre duas datas, transforme-as para milissegundos, obtenha a diferença, 
-		  some 1 hora (devido a problemas de horário de verão etc.) e divida por 86400000. */
+		  some 1 hora (devido a problemas de horário de verão etc.) e divida por 86400000. 
 		DateFormat df = new SimpleDateFormat ("dd/MM/yyyy");
         df.setLenient(false);
         Date d1 = null;
@@ -129,7 +130,6 @@ public class Carros implements CalculaValor {
         long dt = (d2.getTime() - d1.getTime()) + 3600000; // 1 hora para compensar horário de verão
         System.out.println ("Dias com o carro:"+dt / 86400000L);
         double valorPendente =(dt / 86400000L)*(this.taxaDiaria);
-        //System.out.println ("valor a pagar:"+valorPendente);
         
         //sett na pendencia, caso pago = 0 quer dizer que o cliente pagou o carro e não vai ficar com pendencia
         if(pago == 0)
@@ -142,8 +142,8 @@ public class Carros implements CalculaValor {
         //colocando o carro disponivel novamente
         setSituacao(true);
 	}
-	
-	public boolean alugarCarro(boolean pendencia)
+*/	
+	/*public boolean alugarCarro(boolean pendencia)
 	{
 		if(this.situacao && !pendencia)
 		{
@@ -170,6 +170,6 @@ public class Carros implements CalculaValor {
 			return false;
 		}
 		return false;
-	}
+	}*/
 	
 }

@@ -9,6 +9,7 @@ public class main {
 	{
 		ArrayList<Pessoa> pessoas = new ArrayList<>(); // criando um ArrayList para cadastrar clientes
 		ArrayList<Carros> carro = new ArrayList<>(); // criando ArrayList para cadastrar os carros
+		ArrayList<Aluguel> aluguel = new ArrayList<>();
 		
 		Scanner leitor = new Scanner(System.in);
 		int op;
@@ -18,6 +19,7 @@ public class main {
 		ut.criaArqTxt();
 		pessoas = ut.getPessoaTxt();
 		carro = ut.getCarroTxt();
+		aluguel = ut.getAlugueis(carro, pessoas); 
 		
 		while(flag)
 		{
@@ -64,7 +66,7 @@ public class main {
 					}
 					System.out.println("Entre com o Razao Social: ");
 					String razaoSocial = leitor.next();
-					PessoaJuridica pj = new PessoaJuridica(nomePj, enderecoPj, telefonePj, cnpj, razaoSocial);
+					PessoaJuridica pj = new PessoaJuridica(nomePj, enderecoPj, telefonePj, razaoSocial, cnpj);
 					ut.escreveArqPj(pj); //passando o objeto pj para escrever no arquivo
 					ut.getPessoaTxt(); // atualizando o arquivo txt
 					//pessoas.add(new PessoaJuridica(nomePj, enderecoPj, telefonePj, cnpj, razaoSocial)); // adicionadno ao arraylist
@@ -158,14 +160,18 @@ public class main {
 					if(corr == null)
 						break;
 					
+					Aluguel alu = new Aluguel(corr, pes);
+					//aluguel = ut.getAlugueis(carro, pessoas);
+					//ut.atualizaTxtAluguel(aluguel);
 					
-					if(corr.alugarCarro(pes.getPendencia()))
+					if(alu.alugar())
 					{
-						ut.atualizaTxt(carro, corr);
+						ut.atualizaCarroTxt(carro, corr);
 						carro = ut.getCarroTxt();
-						/*double val = corr.getValorPendente();
-						pes.setValorPendencia(val);
-						System.out.println("TEEEESSSTEEEEEE !!!! : "+val);*/
+						ut.escreveArqAlugueis(pes, corr, true);
+						aluguel.add(alu);
+						aluguel = ut.getAlugueis(carro, pessoas);
+						ut.atualizaTxtAluguel(aluguel);
 					}
 					else
 						break;
@@ -175,8 +181,10 @@ public class main {
 					//case para devolver o carro
 					System.out.println("Entre com o Modelo:");
 					String model = leitor.next();
-					utilidades u5 = new utilidades();
-					Carros c2 = u5.buscaCarro(carro, model);
+					Carros c2 = ut.buscaCarro(carro, model);
+					
+					System.out.println("Entre com o nome do Cliente:");
+					String n3 = leitor.next();
 					
 					System.out.println("Data do aluguel:");
 					String ini = leitor.next();
@@ -191,15 +199,31 @@ public class main {
 					int qf = leitor.nextInt();
 					
 					c2.calculaValorDiaria();
+
+					Pessoa pesso = ut.buscaCliente(pessoas, n3);
+
+					pessoas = ut.getPessoaTxt();
+					ut.atualizaCarroTxt(carro, c2);
+					carro = ut.getCarroTxt();
+					ut.atualizaPessoaTxt(pessoas, pesso);
+							
+					Aluguel alu2 = ut.buscaAluguel(aluguel, n3, model);
+					if(alu2 == null)
+					{
+						System.out.println("ALUGUEL NÃO ENCONTRADO !!");
+						break;
+					}
+					alu2.devolverCarro(qf, ini, fim, n3, model, pago);
 					
-					c2.devolverCarro(qf, ini, fim, pago);
+					aluguel = ut.atualizaAluguel(aluguel, alu2);
+					ut.atualizaTxtAluguel(aluguel);
 					
 					break;
 				default:
 					System.out.println("ENCERRADO !!");
 					flag = false;
 			}
-			//leitor.close();
+
 		}
 		
 		//PessoaFisica pf = new PessoaFisica("harison", "Goiabal", "24999162280", "11989685272");

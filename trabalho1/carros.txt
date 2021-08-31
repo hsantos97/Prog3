@@ -1,4 +1,4 @@
-qwe-474 2015 gol 500 true 25.00 aasd  
-asd-654 2016 vectra 300 true 12.00 asdsf 
-zxc-987 2021 uno 100 false 20.00 asdasd 
-vxc-258 2021 ranger 50 true 60.00 novo 
+qwe-987 2021 uno 100 false 10.00 novo 
+asd-654 2020 gol 200 false 9.00 semi-novo 
+zaq-258 2015 vectra 500 false 7.00 velho 
+nhn-741 2019 corola 300 true 8.50 novo 

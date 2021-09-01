@@ -20,6 +20,7 @@ public class Carros implements CalculaValor {
 	private String observacoes;
 	private double valorPendente;
 	private String dataAluguel;
+	private String dataEntrega;
 	
 	//construtor
 	public Carros(String placa, int ano, String modelo, int quilometragem, boolean situacao, double taxaDiaria, String observacoes)
@@ -46,7 +47,8 @@ public class Carros implements CalculaValor {
 	public String getObservacoes() { return this.observacoes; }
 	public double getValorPendente() { return this.valorPendente; }
 	public String getDataAluguel() { return this.dataAluguel; }
-	
+	public String getDataEntrega() { return this.dataEntrega; }
+
 	//sets
 	public void setQuilometragem(int quilometragem) { this.quilometragem += quilometragem; }
 	public void setSituacao(boolean situacao) { this.situacao = situacao; }
@@ -55,6 +57,7 @@ public class Carros implements CalculaValor {
 	public void setObservacoes(String observacoes) { this.observacoes = observacoes; }
 	public void setValorPendente(double valorPendente) { this.valorPendente = valorPendente; }
 	public void setDataAluguel(String dataAluguel) { this.dataAluguel = dataAluguel; }
+	public void setDataEntrega(String dataEntrega) { this.dataEntrega = dataEntrega; }
 	
 	public void printCarro()
 	{

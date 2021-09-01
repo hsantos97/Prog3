@@ -153,7 +153,12 @@ public class main {
 					Pessoa pes = ut.buscaCliente(pessoas, n2);
 					if(pes == null)
 						break;
-					
+					if(pes.getPendencia())
+					{
+						System.out.println("CLIENTE COM PENDENCIA !!");
+						break;
+					}
+
 					System.out.println("Entre com o Modelo:");
 					String modol = leitor.next();
 					carro = ut.getCarroTxt();
@@ -161,38 +166,31 @@ public class main {
 					Carros corr = ut.buscaCarro(carro, modol);
 					if(corr == null)
 						break;
-					
-					Aluguel alu = new Aluguel(corr, pes);
-					System.out.printf("Nome:%s | Modelo:%s \n",alu.getNome(),alu.getModelo());
-					
+					if(!corr.getSituacao())
+					{
+						System.out.println("CARRO JA ESTÁ ALUGADO !!");
+						break;
+					}
+					corr.setDataAluguel(ut.dataAtual());
+					corr.setDataEntrega("***");
+					corr.setSituacao(false);
+
+					ut.atualizaTxtAluguel(aluguel);
 					aluguel = ut.getAlugueis(carro, pessoas);
+					ut.atualizaCarroTxt(carro, corr);//atualiza txt de carro
+					carro = ut.getCarroTxt();
+					aluguel = ut.getAlugueis(carro, pessoas);
+					Aluguel alu = new Aluguel(corr, pes);
+					//System.out.printf("Nome:%s | Modelo:%s \n",alu.getNome(),alu.getModelo());
+					/*aluguel.add(alu);
 					boolean test = alu.alugar();
 					if(!test){
 						System.out.printf(" Carro nao disponivel!\n");
 						break;
-					}
-					//System.out.println(alu.getStatus());
+					}*/
 					aluguel.add(alu);
-					System.out.printf("Tamanho array:%d |\n",aluguel.size());
-					//aluguel = ut.atualizaAluguel(aluguel,alu);
-					System.out.printf("Tamanho array:%d |\n",aluguel.size());
 					ut.atualizaTxtAluguel(aluguel);
 					aluguel = ut.getAlugueis(carro, pessoas);
-					/*
-					if(!alu.getStatus())
-					{
-						alu.alugar();
-						ut.atualizaCarroTxt(carro, corr);
-						carro = ut.getCarroTxt();						
-						
-						//aluguel = ut.getAlugueis(carro, pessoas);
-						ut.escreveArqAlugueis(pes, corr, true);
-						ut.atualizaTxtAluguel(aluguel);
-						break;
-					}
-					else
-						break;
-					*/
 					break;
 				case 9:
 					//case para devolver o carro
@@ -201,9 +199,20 @@ public class main {
 					System.out.println("Entre com o Modelo:");
 					String model = leitor.next();
 					Carros c2 = ut.buscaCarro(carro, model);
+					if(c2 == null)
+					{
+						System.out.println("CARRO NÃO ENCONTRADO !!");
+						break;
+					}
 					
 					System.out.println("Entre com o nome do Cliente:");
 					String n3 = leitor.next();
+					Pessoa pesso = ut.buscaCliente(pessoas, n3);
+					if(pesso ==  null)
+					{
+						System.out.println("CLIENTE NÃO ENCONTRADO !!");
+						break;
+					}
 					
 					System.out.println("Data do aluguel:");
 					String ini = leitor.next();
@@ -217,15 +226,8 @@ public class main {
 					System.out.println("Quilometragem final");
 					int qf = leitor.nextInt();
 					
-					c2.calculaValorDiaria();
-
-					Pessoa pesso = ut.buscaCliente(pessoas, n3);
-
-					pessoas = ut.getPessoaTxt();
-					ut.atualizaCarroTxt(carro, c2);
-					carro = ut.getCarroTxt();
-					ut.atualizaPessoaTxt(pessoas, pesso);
-							
+					//c2.calculaValorDiaria();
+												
 					Aluguel alu2 = ut.buscaAluguel(aluguel, n3, model);
 					if(alu2 == null)
 					{
@@ -233,9 +235,19 @@ public class main {
 						break;
 					}
 					alu2.devolverCarro(qf, ini, fim, n3, model, pago);
-					
+					c2.setDataEntrega(fim);
+					c2.setSituacao(true);
+					Pessoa p = alu2.getPessoa();
+					ut.atualizaPessoaTxt(pessoas, p);
+					pessoas = ut.getPessoaTxt();
+					ut.atualizaCarroTxt(carro, c2);
+					carro = ut.getCarroTxt();
+					ut.atualizaPessoaTxt(pessoas, pesso);
 					aluguel = ut.atualizaAluguel(aluguel, alu2);
 					ut.atualizaTxtAluguel(aluguel);
+					//colaca aqui pra pegar o aluguel do txts
+					aluguel = ut.getAlugueis(carro, pessoas);
+
 					break;
 				default:
 					System.out.println("ENCERRADO !!");

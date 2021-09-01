@@ -32,10 +32,10 @@ public class Pessoa {
 		if(valorPendencia > 0)
 		{
 			this.valorPendencia += valorPendencia;
-			setPendencia(true);
+			this.setPendencia(true);
 		}
 		else
-			setPendencia(false);
+			this.setPendencia(false);
 	}	
  
 	

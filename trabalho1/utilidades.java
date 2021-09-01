@@ -7,6 +7,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+
 
 public class utilidades {
 	public Pessoa buscaCliente(ArrayList<Pessoa> pessoa, String nome)
@@ -123,8 +128,8 @@ public class utilidades {
 		{
 			FileWriter fileWriter = new FileWriter("./arquivos/carros.txt", true);
 			PrintWriter printWriter = new PrintWriter(fileWriter);
-			printWriter.printf("%s %d %s %d %b %.2f %s %n", c.getPlaca(), c.getAno(), c.getModelo(), 
-					c.getQuilometragem(), c.getSituacao(), c.getTaxaDiaria(), c.getObservacoes());
+			printWriter.printf("%s %d %s %d %b %.2f %s %s %s %n", c.getPlaca(), c.getAno(), c.getModelo(), 
+					c.getQuilometragem(), c.getSituacao(), c.getTaxaDiaria(), c.getObservacoes(), c.getDataAluguel(), c.getDataEntrega());
 		
 			//o método flush libera a escrita no arquivo
             printWriter.flush();
@@ -215,9 +220,11 @@ public class utilidades {
 				String linha = arquivo.nextLine();
 				//System.out.println(linha);
 				String[] itens = linha.split(" ");
-				
-				car.add(new Carros(itens[0], Integer.parseInt(itens[1]), itens[2], Integer.parseInt(itens[3]), 
-						Boolean.parseBoolean(itens[4]), Double.parseDouble(itens[5]), itens[6]));
+				Carros c = new Carros(itens[0], Integer.parseInt(itens[1]), itens[2], Integer.parseInt(itens[3]), 
+						Boolean.parseBoolean(itens[4]), Double.parseDouble(itens[5]), itens[6]);
+				c.setDataEntrega(itens[8]);
+				c.setDataAluguel(itens[7]);
+				car.add(c);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -238,11 +245,24 @@ public class utilidades {
 				String linha = arquivo.nextLine();
 				String[] itens = linha.split(" ");
 
-				if(itens.length == 5)
-					pe.add(new PessoaFisica(itens[0], itens[1], itens[2], itens[3]));
-				else if(itens.length == 6)
-					pe.add(new PessoaJuridica(itens[0], itens[1], itens[2], itens[3], itens[4]));
-
+				if(itens.length == 5){
+					Pessoa p = new PessoaFisica(itens[0], itens[1], itens[2], itens[3]);
+					if(Double.parseDouble(itens[4])>0){
+						p.setPendencia(true);
+					}else{
+						p.setPendencia(false);
+					} 
+					pe.add(p);
+				}
+				else if(itens.length == 6){
+					Pessoa p = new PessoaJuridica(itens[0], itens[1], itens[2], itens[3], itens[4]);
+					if(Double.parseDouble(itens[5])>0){
+						p.setPendencia(true);
+					}else{
+						p.setPendencia(false);
+					} 
+					pe.add(p);
+				}
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -327,8 +347,8 @@ public class utilidades {
 			PrintWriter printWriter = new PrintWriter(fileWriter);
 			for(Carros car : carros)
 			{
-				printWriter.printf("%s %d %s %d %b %.2f %s %n", car.getPlaca(), car.getAno(), car.getModelo(), 
-					car.getQuilometragem(), car.getSituacao(), car.getTaxaDiaria(), car.getObservacoes());
+				printWriter.printf("%s %d %s %d %b %.2f %s %s %s %n", car.getPlaca(), car.getAno(), car.getModelo(), 
+					car.getQuilometragem(), car.getSituacao(), car.getTaxaDiaria(), car.getObservacoes(),car.getDataAluguel(),car.getDataEntrega());
 				
 				//o método flush libera a escrita no arquivo
 	            printWriter.flush();
@@ -465,10 +485,10 @@ public class utilidades {
 				//System.out.println("Entrou");
 				if(p instanceof PessoaFisica)
 					printWriter.printf("%s %s %s %s %s %s %n", p.getNome(), ((PessoaFisica) p).getCpf(), c.getModelo(), 
-							c.getPlaca(), c.getDataAluguel(), aluguel.getFim());
+							c.getPlaca(), c.getDataAluguel(), aluguel.getFim(),c.getDataAluguel(),c.getDataEntrega());
 				if(p instanceof PessoaJuridica)
 					printWriter.printf("%s %s %s %s %s %s %n", p.getNome(), ((PessoaJuridica) p).getCnpj(), c.getModelo(), 
-							c.getPlaca(), c.getDataAluguel(), aluguel.getFim());
+							c.getPlaca(), c.getDataAluguel(), aluguel.getFim(),c.getDataAluguel(),c.getDataEntrega());
 				
 				printWriter.flush();
 			}
@@ -530,5 +550,11 @@ public class utilidades {
 		
 		return null;
 		
+	}
+
+	public String dataAtual(){
+		Date data = new Date(System.currentTimeMillis()); 
+		SimpleDateFormat formatarDate = new SimpleDateFormat("dd/MM/yyy");
+		return formatarDate.format(data);
 	}
 }

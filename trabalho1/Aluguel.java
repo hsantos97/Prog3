@@ -43,7 +43,7 @@ public class Aluguel {
 			System.out.println("Data do alugel: "+formatarDate.format(data));
 
 			this.carro.setDataAluguel(formatarDate.format(data));
-			this.carro.setSituacao(false); //deixando o carro indisponivel
+			//this.carro.setSituacao(false); //deixando o carro indisponivel
 			return true;
 		}
 		else if(!this.carro.getSituacao())

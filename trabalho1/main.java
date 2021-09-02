@@ -16,7 +16,7 @@ public class main {
 		boolean flag = true;
 		
 		utilidades ut = new utilidades();
-		ut.criaArqTxt();
+		//ut.criaArqTxt();
 		pessoas = ut.getPessoaTxt();
 		carro = ut.getCarroTxt();
 		//aluguel = ut.getAlugueis(carro, pessoas); 
@@ -24,7 +24,7 @@ public class main {
 		while(flag)
 		{
 			System.out.printf("1-Cadastrar Pf\n2-Cadastrar Pj\n3-Cadastrar Carro\n4-Print Clientes Cadastrados\n"
-					+ "5-Print Carros cadastrados\n6-Buscar Cliente\n7-Buscar Carro\n8-Alugar\n9-Devolver");
+					+ "5-Print Carros cadastrados\n6-Buscar Cliente\n7-Buscar Carro\n8-Alugar\n9-Devolver\n10-Pagar Pendencia\n");
 			op = leitor.nextInt();
 			switch(op)
 			{
@@ -213,7 +213,10 @@ public class main {
 						System.out.println("CLIENTE NÃO ENCONTRADO !!");
 						break;
 					}
-					
+					if(pesso.getPendencia()){
+						System.out.println("CLIENTE POSSUI PENDÊNCIA !!");
+						break;
+					}
 					System.out.println("Data do aluguel:");
 					String ini = leitor.next();
 					
@@ -238,6 +241,7 @@ public class main {
 					c2.setDataEntrega(fim);
 					c2.setSituacao(true);
 					Pessoa p = alu2.getPessoa();
+					System.out.printf("Valor pendencia :%.2f\n",p.getValorPendencia());
 					ut.atualizaPessoaTxt(pessoas, p);
 					pessoas = ut.getPessoaTxt();
 					ut.atualizaCarroTxt(carro, c2);
@@ -249,6 +253,35 @@ public class main {
 					aluguel = ut.getAlugueis(carro, pessoas);
 
 					break;
+				case 10:
+					//entre com o nome do cliente
+					//procure o cliente
+					//atualize o array de cliente/pessoa
+					//grave no txt 
+					//pronto
+					//vo pita um CIGARRÂO
+					System.out.println("Entre com o nome do Cliente:");
+					String n4 = leitor.next();
+					//pega as pessoas que estão no arquivo pessoas .txt e retorna um array de pessoas
+					pessoas = ut.getPessoaTxt();//retorna um array de pessoas
+					//buscar no array de pessoas recem atualizado, a pessoa n4
+					Pessoa pe2 = ut.buscaCliente(pessoas, n4);
+					if(pe2.getValorPendencia() > 0)
+					{
+						System.out.println("Valor a pagar: ");
+						double v = leitor.nextDouble();
+						pe2.pagar(v);
+						ut.atualizaPessoaTxt(pessoas, pe2);
+						System.out.printf("Pen: %.2f\nNome:%s\nEntrada:%.2f",pe2.getValorPendencia(),pe2.getNome(),v);
+						pessoas = ut.getPessoaTxt();
+						System.out.println("Valor pendencia att: "+pe2.getValorPendencia());
+					}
+					else
+					{
+						System.out.println("CLIENTE NÃOO TEM PENDENCIA !!");
+						break;
+					}
+					break;			
 				default:
 					System.out.println("ENCERRADO !!");
 					flag = false;

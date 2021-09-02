@@ -249,8 +249,10 @@ public class utilidades {
 					Pessoa p = new PessoaFisica(itens[0], itens[1], itens[2], itens[3]);
 					if(Double.parseDouble(itens[4])>0){
 						p.setPendencia(true);
+						p.setValorPendencia(Double.parseDouble(itens[4]));
 					}else{
 						p.setPendencia(false);
+						p.setValorPendencia(0);
 					} 
 					pe.add(p);
 				}
@@ -258,8 +260,10 @@ public class utilidades {
 					Pessoa p = new PessoaJuridica(itens[0], itens[1], itens[2], itens[3], itens[4]);
 					if(Double.parseDouble(itens[5])>0){
 						p.setPendencia(true);
+						p.setValorPendencia(Double.parseDouble(itens[5]));
 					}else{
 						p.setPendencia(false);
+						p.setValorPendencia(0);
 					} 
 					pe.add(p);
 				}
@@ -412,7 +416,7 @@ public class utilidades {
 		
 			try 
 			{
-				FileWriter fileWriter = new FileWriter("cliente.txt", false);
+				FileWriter fileWriter = new FileWriter("./arquivos/cliente.txt", false);
 				PrintWriter printWriter = new PrintWriter(fileWriter);
 				for(Pessoa pj : pessoas)
 				{

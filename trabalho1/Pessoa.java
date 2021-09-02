@@ -31,7 +31,8 @@ public class Pessoa {
 	{ 
 		if(valorPendencia > 0)
 		{
-			this.valorPendencia += valorPendencia;
+			//evita colocar nome de parametro igual a nome de atributo/ em c tu pode se ferrar pq nao precisa chamar o "THIS."
+			this.valorPendencia = this.valorPendencia+(valorPendencia);
 			this.setPendencia(true);
 		}
 		else
@@ -44,4 +45,10 @@ public class Pessoa {
 		System.out.printf("Nome: %s\nEndereço: %s\nTelefone: %s\n", this.nome, this.endereco, this.telefone);
 	}
 	
+	public void pagar(double valor){
+		this.valorPendencia -= valor;
+		if(this.valorPendencia == 0){
+			this.pendencia = false;
+		}
+	}
 }

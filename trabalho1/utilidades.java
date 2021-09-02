@@ -370,73 +370,41 @@ public class utilidades {
 	}
 	
 	public void atualizaPessoaTxt(ArrayList<Pessoa> pessoas, Pessoa p)
-	{
-		if(p instanceof PessoaFisica)
+	{	
+		for(int i = 0; i <= pessoas.size()-1; i++)
+		{	
+			Pessoa aux = pessoas.get(i);
+			aux = pessoas.get(i);
+			if(p.getTelefone().equals(aux.getTelefone()))
+				pessoas.set(i, p);	
+		}
+		try 
 		{
-
-			for(int i = 0; i <= pessoas.size()-1; i++)
-			{	
-				Pessoa aux = pessoas.get(i);
-				aux = pessoas.get(i);
-				if(p.getTelefone().equals(aux.getTelefone()))
-					pessoas.set(i, p);	
-			}
-		
-			try 
-			{
-				FileWriter fileWriter = new FileWriter("./arquivos/cliente.txt", false);
-				PrintWriter printWriter = new PrintWriter(fileWriter);
-				for(Pessoa pf : pessoas)
-				{
-					printWriter.printf("%s %s %s %s %.2f %n", pf.getNome(), pf.getEndereco(), pf.getTelefone(), 
-							((PessoaFisica) p).getCpf(), pf.getValorPendencia());
-				
-					//o método flush libera a escrita no arquivo
+			FileWriter fileWriter = new FileWriter("./arquivos/cliente.txt", false);
+			PrintWriter printWriter = new PrintWriter(fileWriter);
+			for(Pessoa pes:pessoas){
+				if(pes instanceof PessoaFisica && ((PessoaFisica)pes).getCpf()!=null){
+					System.out.println("Entrou fisico");
+					printWriter.printf("%s %s %s %s %.2f %n", pes.getNome(), pes.getEndereco(), pes.getTelefone(), 
+						((PessoaFisica) pes).getCpf(), pes.getValorPendencia());
+					
+						//o método flush libera a escrita no arquivo
+					printWriter.flush();
+				}else if(pes instanceof PessoaJuridica && ((PessoaJuridica)pes).getCnpj()!=null){
+					System.out.println("Entrou juridico");
+					printWriter.printf("%s %s %s %s %s %.2f %n", pes.getNome(), pes.getEndereco(), pes.getTelefone(), 
+						((PessoaJuridica)pes).getRazaoSocial(), ((PessoaJuridica)pes).getCnpj(), pes.getValorPendencia());
+					
+						//o método flush libera a escrita no arquivo
 					printWriter.flush();
 				}
-				      
-				//No final precisamos fechar o arquivo
-				printWriter.close();
-	            
-			} catch (IOException e) 
-			{
-				e.printStackTrace();
-			}
-		}
-		
-		if(p instanceof PessoaJuridica)
+			}		
+			//No final precisamos fechar o arquivo
+			printWriter.close();		
+		} catch (IOException e) 
 		{
-
-			for(int i = 0; i <= pessoas.size()-1; i++)
-			{	
-				Pessoa aux = pessoas.get(i);
-				aux = pessoas.get(i);
-				if(p.getTelefone().equals(aux.getTelefone()))
-					pessoas.set(i, p);	
-			}
-		
-			try 
-			{
-				FileWriter fileWriter = new FileWriter("./arquivos/cliente.txt", false);
-				PrintWriter printWriter = new PrintWriter(fileWriter);
-				for(Pessoa pj : pessoas)
-				{
-					printWriter.printf("%s %s %s %s %s %.2f %n", pj.getNome(), pj.getEndereco(), pj.getTelefone(), 
-							((PessoaJuridica)p).getRazaoSocial(), ((PessoaJuridica)p).getCnpj(), pj.getValorPendencia());
-				
-					//o método flush libera a escrita no arquivo
-					printWriter.flush();
-				}
-				      
-				//No final precisamos fechar o arquivo
-				printWriter.close();
-	            
-			} catch (IOException e) 
-			{
-				e.printStackTrace();
-			}
-		}
-		
+			e.printStackTrace();
+		}	
 	}
 	
 	public Aluguel buscaAluguel(ArrayList<Aluguel> alugueis, String nome, String modelo)

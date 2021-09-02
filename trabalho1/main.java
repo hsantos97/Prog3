@@ -197,6 +197,7 @@ public class main {
 					//aluguel = ut.getAlugueis(carro, pessoas);
 					System.out.printf("Tamanho array:%d |\n",aluguel.size());
 					System.out.println("Entre com o Modelo:");
+					pessoas = ut.getPessoaTxt();
 					String model = leitor.next();
 					Carros c2 = ut.buscaCarro(carro, model);
 					if(c2 == null)
@@ -241,25 +242,23 @@ public class main {
 					c2.setDataEntrega(fim);
 					c2.setSituacao(true);
 					Pessoa p = alu2.getPessoa();
+					//p.pagar(pago);
 					System.out.printf("Valor pendencia :%.2f\n",p.getValorPendencia());
-					ut.atualizaPessoaTxt(pessoas, p);
-					pessoas = ut.getPessoaTxt();
+
 					ut.atualizaCarroTxt(carro, c2);
 					carro = ut.getCarroTxt();
-					ut.atualizaPessoaTxt(pessoas, pesso);
-					aluguel = ut.atualizaAluguel(aluguel, alu2);
+					Aluguel al = new Aluguel(c2,p);
+					ut.atualizaPessoaTxt(pessoas, p);
+					al.devolverCarro(qf, ini, fim, n3, model, pago);
+					pessoas = ut.getPessoaTxt();
+					aluguel = ut.atualizaAluguel(aluguel, al);
 					ut.atualizaTxtAluguel(aluguel);
 					//colaca aqui pra pegar o aluguel do txts
 					aluguel = ut.getAlugueis(carro, pessoas);
 
 					break;
 				case 10:
-					//entre com o nome do cliente
-					//procure o cliente
-					//atualize o array de cliente/pessoa
-					//grave no txt 
-					//pronto
-					//vo pita um CIGARRÂO
+
 					System.out.println("Entre com o nome do Cliente:");
 					String n4 = leitor.next();
 					//pega as pessoas que estão no arquivo pessoas .txt e retorna um array de pessoas

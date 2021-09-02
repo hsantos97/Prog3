@@ -33,6 +33,9 @@ public class Aluguel {
 	public String getNome(){return this.nome;}
 	public String getModelo(){return this.modelo;}
 	
+	public void forceFim(String fim){
+		this.fim = fim;
+	}
 	public boolean alugar()
 	{
 		if(this.carro.getSituacao() && !this.pessoa.getPendencia())
@@ -84,7 +87,7 @@ public class Aluguel {
 		}
         long dt = (d2.getTime() - d1.getTime()) + 3600000; // 1 hora para compensar horário de verão
         System.out.println ("Dias com o carro:"+dt / 86400000L);
-		this.carro.calculaValorDiaria();
+
         double valorPendente =(dt / 86400000L)*(this.carro.getTaxaDiaria());
         
         //sett na pendencia, caso pago = 0 quer dizer que o cliente pagou o carro e não vai ficar com pendencia

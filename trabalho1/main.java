@@ -189,12 +189,20 @@ public class main {
 						break;
 					}*/
 					aluguel.add(alu);
+					Carros cr = alu.getCarro();
+					//talves atualizar pessoa
+					cr.setDataAluguel(ut.dataAtual());
+					cr.setDataEntrega("null");
+					cr.setSituacao(false);
+					ut.atualizaCarroTxt(carro, cr);
+					carro = ut.getCarroTxt();
 					ut.atualizaTxtAluguel(aluguel);
 					aluguel = ut.getAlugueis(carro, pessoas);
 					break;
 				case 9:
 					//case para devolver o carro
 					//aluguel = ut.getAlugueis(carro, pessoas);
+					aluguel = ut.getAlugueis(carro, pessoas);
 					System.out.printf("Tamanho array:%d |\n",aluguel.size());
 					System.out.println("Entre com o Modelo:");
 					pessoas = ut.getPessoaTxt();
@@ -253,8 +261,8 @@ public class main {
 					carro = ut.getCarroTxt();
 					Aluguel al = new Aluguel(c2,p);
 					ut.atualizaPessoaTxt(pessoas, p);
-					//al.devolverCarro(qf, ini, fim, n3, model, pago); //comentei aqui
-					
+					al.devolverCarro(qf, ini, fim, n3, model, pago); //comentei aqui
+					al.forceFim(fim);//faz mais um teste ae
 					pessoas = ut.getPessoaTxt();
 					aluguel = ut.atualizaAluguel(aluguel, al);
 					ut.atualizaTxtAluguel(aluguel);
@@ -263,7 +271,6 @@ public class main {
 
 					break;
 				case 10:
-
 					System.out.println("Entre com o nome do Cliente:");
 					String n4 = leitor.next();
 					//pega as pessoas que estão no arquivo pessoas .txt e retorna um array de pessoas

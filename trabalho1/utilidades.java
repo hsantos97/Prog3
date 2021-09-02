@@ -223,10 +223,10 @@ public class utilidades {
 				String[] itens = linha.split(" ");
 				Carros c = new Carros(itens[0], Integer.parseInt(itens[1]), itens[2], Integer.parseInt(itens[3]), 
 						Boolean.parseBoolean(itens[4]), Double.parseDouble(itens[5]), itens[6]);
-				c.setDataEntrega(itens[8]);
+				c.setDataEntrega(itens[8]!= null ? itens[8]:"null" );
 				c.setDataAluguel(itens[7]);
 				car.add(c);
-			}
+			}//PODE TESTAR
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -456,12 +456,13 @@ public class utilidades {
 				Pessoa p = aluguel.getPessoa();
 				Carros c = aluguel.getCarro();
 				//System.out.println("Entrou");
-				if(p instanceof PessoaFisica)
+				if(p instanceof PessoaFisica){
 					printWriter.printf("%s %s %s %s %s %s %n", p.getNome(), ((PessoaFisica) p).getCpf(), c.getModelo(), 
-							c.getPlaca(), c.getDataAluguel(), aluguel.getFim(),c.getDataAluguel(),c.getDataEntrega());
+						c.getPlaca(), c.getDataAluguel(), c.getDataEntrega());
+				}
 				if(p instanceof PessoaJuridica)
 					printWriter.printf("%s %s %s %s %s %s %n", p.getNome(), ((PessoaJuridica) p).getCnpj(), c.getModelo(), 
-							c.getPlaca(), c.getDataAluguel(), aluguel.getFim(),c.getDataAluguel(),c.getDataEntrega());
+							c.getPlaca(), c.getDataAluguel(), c.getDataEntrega());
 				
 				printWriter.flush();
 			}

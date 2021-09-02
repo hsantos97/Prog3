@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.BufferedReader;
@@ -246,26 +247,26 @@ public class utilidades {
 				String[] itens = linha.split(" ");
 
 				if(itens.length == 5){
-					Pessoa p = new PessoaFisica(itens[0], itens[1], itens[2], itens[3]);
+					PessoaFisica pf = new PessoaFisica(itens[0], itens[1], itens[2], itens[3]);
 					if(Double.parseDouble(itens[4])>0){
-						p.setPendencia(true);
-						p.setValorPendencia(Double.parseDouble(itens[4]));
+						pf.setPendencia(true);
+						pf.setValorPendencia(Double.parseDouble(itens[4]));
 					}else{
-						p.setPendencia(false);
-						p.setValorPendencia(0);
+						pf.setPendencia(false);
+						pf.setValorPendencia(0);
 					} 
-					pe.add(p);
+					pe.add(pf);
 				}
 				else if(itens.length == 6){
-					Pessoa p = new PessoaJuridica(itens[0], itens[1], itens[2], itens[3], itens[4]);
+					PessoaJuridica pj = new PessoaJuridica(itens[0], itens[1], itens[2], itens[3], itens[4]);
 					if(Double.parseDouble(itens[5])>0){
-						p.setPendencia(true);
-						p.setValorPendencia(Double.parseDouble(itens[5]));
+						pj.setPendencia(true);
+						pj.setValorPendencia(Double.parseDouble(itens[5]));
 					}else{
-						p.setPendencia(false);
-						p.setValorPendencia(0);
+						pj.setPendencia(false);
+						pj.setValorPendencia(0);
 					} 
-					pe.add(p);
+					pe.add(pj);
 				}
 			}
 		} catch (FileNotFoundException e) {

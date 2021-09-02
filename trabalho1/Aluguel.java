@@ -87,10 +87,12 @@ public class Aluguel {
         double valorPendente =(dt / 86400000L)*(this.carro.getTaxaDiaria());
         
         //sett na pendencia, caso pago = 0 quer dizer que o cliente pagou o carro e não vai ficar com pendencia
-        if(pago == 0)
+        if(pago == 0){
         	this.pessoa.setValorPendencia(0.0);
-        else
-        	this.pessoa.setValorPendencia(valorPendente);
+        }else{
+			this.pessoa.setValorPendencia(valorPendente);
+			this.pessoa.pagar(valorPendente);
+		}	
         
         System.out.println ("valor a pagar:"+valorPendente);
         

@@ -84,6 +84,7 @@ public class Aluguel {
 		}
         long dt = (d2.getTime() - d1.getTime()) + 3600000; // 1 hora para compensar horário de verão
         System.out.println ("Dias com o carro:"+dt / 86400000L);
+		this.carro.calculaValorDiaria();
         double valorPendente =(dt / 86400000L)*(this.carro.getTaxaDiaria());
         
         //sett na pendencia, caso pago = 0 quer dizer que o cliente pagou o carro e não vai ficar com pendencia
@@ -91,7 +92,7 @@ public class Aluguel {
         	this.pessoa.setValorPendencia(0.0);
         }else{
 			this.pessoa.setValorPendencia(valorPendente);
-			this.pessoa.pagar(valorPendente);
+			//this.pessoa.pagar(valorPendente);
 		}	
         
         System.out.println ("valor a pagar:"+valorPendente);

@@ -384,14 +384,14 @@ public class utilidades {
 			PrintWriter printWriter = new PrintWriter(fileWriter);
 			for(Pessoa pes:pessoas){
 				if(pes instanceof PessoaFisica && ((PessoaFisica)pes).getCpf()!=null){
-					System.out.println("Entrou fisico");
+					//System.out.println("Entrou fisico");
 					printWriter.printf("%s %s %s %s %.2f %n", pes.getNome(), pes.getEndereco(), pes.getTelefone(), 
 						((PessoaFisica) pes).getCpf(), pes.getValorPendencia());
 					
 						//o método flush libera a escrita no arquivo
 					printWriter.flush();
 				}else if(pes instanceof PessoaJuridica && ((PessoaJuridica)pes).getCnpj()!=null){
-					System.out.println("Entrou juridico");
+					//System.out.println("Entrou juridico");
 					printWriter.printf("%s %s %s %s %s %.2f %n", pes.getNome(), pes.getEndereco(), pes.getTelefone(), 
 						((PessoaJuridica)pes).getRazaoSocial(), ((PessoaJuridica)pes).getCnpj(), pes.getValorPendencia());
 					

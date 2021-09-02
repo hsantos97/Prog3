@@ -66,24 +66,25 @@ public class Carros implements CalculaValor {
 	}
 
 	@Override
-	public double calculaValorDiaria() {
+	public void calculaValorDiaria() {
 		if(this.ano == 2021)
 		{
-			double aumentoTaxa = getTaxaDiaria() + (getTaxaDiaria() * 0.5);
-			setTaxaDiaria(aumentoTaxa);
-			return aumentoTaxa;
+			double aumentoTaxa = this.taxaDiaria + (this.taxaDiaria * 0.5);
+			//setTaxaDiaria(aumentoTaxa);
+			this.taxaDiaria = aumentoTaxa;
+			//return aumentoTaxa;
 		}
 		else if(this.ano >= 2019)
 		{
-			double aumentoTaxa = getTaxaDiaria() + (getTaxaDiaria() * 0.2);
-			setTaxaDiaria(aumentoTaxa);
-			return aumentoTaxa;
+			double aumentoTaxa = this.taxaDiaria + (this.taxaDiaria * 0.2);
+			//setTaxaDiaria(aumentoTaxa);
+			this.taxaDiaria = aumentoTaxa;
+			//return aumentoTaxa;
 		}
-		else
+		/*else
 		{
-			double aumentoTaxa = getTaxaDiaria();
-			return aumentoTaxa;
-		}
+			return this.taxaDiaria;
+		}*/
 		
 	}
 	

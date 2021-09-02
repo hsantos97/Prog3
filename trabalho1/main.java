@@ -205,7 +205,6 @@ public class main {
 						System.out.println("CARRO NÃO ENCONTRADO !!");
 						break;
 					}
-					
 					System.out.println("Entre com o nome do Cliente:");
 					String n3 = leitor.next();
 					Pessoa pesso = ut.buscaCliente(pessoas, n3);
@@ -238,18 +237,24 @@ public class main {
 						System.out.println("ALUGUEL NÃO ENCONTRADO !!");
 						break;
 					}
+					//pessoas = ut.getPessoaTxt(); // COLOQUEI ISSO AQUI
+					//ut.atualizaPessoaTxt(pessoas, pesso); //mudei aquiii
+
 					alu2.devolverCarro(qf, ini, fim, n3, model, pago);
 					c2.setDataEntrega(fim);
 					c2.setSituacao(true);
+					
 					Pessoa p = alu2.getPessoa();
-					//p.pagar(pago);
+
 					System.out.printf("Valor pendencia :%.2f\n",p.getValorPendencia());
 
-					ut.atualizaCarroTxt(carro, c2);
+					ut.atualizaCarroTxt(carro, c2); 
+
 					carro = ut.getCarroTxt();
 					Aluguel al = new Aluguel(c2,p);
 					ut.atualizaPessoaTxt(pessoas, p);
-					al.devolverCarro(qf, ini, fim, n3, model, pago);
+					//al.devolverCarro(qf, ini, fim, n3, model, pago); //comentei aqui
+					
 					pessoas = ut.getPessoaTxt();
 					aluguel = ut.atualizaAluguel(aluguel, al);
 					ut.atualizaTxtAluguel(aluguel);
@@ -271,7 +276,7 @@ public class main {
 						double v = leitor.nextDouble();
 						pe2.pagar(v);
 						ut.atualizaPessoaTxt(pessoas, pe2);
-						System.out.printf("Pen: %.2f\nNome:%s\nEntrada:%.2f",pe2.getValorPendencia(),pe2.getNome(),v);
+						System.out.printf("Pen: %.2f\nNome:%s\nEntrada:%.2f\n",pe2.getValorPendencia(),pe2.getNome(),v);
 						pessoas = ut.getPessoaTxt();
 						System.out.println("Valor pendencia att: "+pe2.getValorPendencia());
 					}

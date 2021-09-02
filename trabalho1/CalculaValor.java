@@ -1,3 +1,3 @@
 public interface CalculaValor {
-	public double calculaValorDiaria();
+	public void calculaValorDiaria();
 }

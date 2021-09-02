@@ -102,6 +102,7 @@ public class main {
 						situacao = false;
 					
 					Carros c3 = new Carros(placa, ano, modelo, quilometragem, situacao, txDiaria, observacao);
+					c3.calculaValorDiaria();	
 					ut.escreveArqCarro(c3);// passando um objeto carro para escrever no arquivo
 					carro = ut.getCarroTxt();//atualizar os carros no txt
 					//carro.add(new Carros(placa, ano, modelo, quilometragem, situacao, txDiaria, observacao));
@@ -203,7 +204,7 @@ public class main {
 					//case para devolver o carro
 					//aluguel = ut.getAlugueis(carro, pessoas);
 					aluguel = ut.getAlugueis(carro, pessoas);
-					System.out.printf("Tamanho array:%d |\n",aluguel.size());
+					//System.out.printf("Tamanho array:%d |\n",aluguel.size());
 					System.out.println("Entre com o Modelo:");
 					pessoas = ut.getPessoaTxt();
 					String model = leitor.next();
@@ -221,10 +222,10 @@ public class main {
 						System.out.println("CLIENTE NÃO ENCONTRADO !!");
 						break;
 					}
-					if(pesso.getPendencia()){
+					/*if(pesso.getPendencia()){
 						System.out.println("CLIENTE POSSUI PENDÊNCIA !!");
 						break;
-					}
+					}*/
 					System.out.println("Data do aluguel:");
 					String ini = leitor.next();
 					

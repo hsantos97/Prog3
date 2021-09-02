@@ -23,7 +23,7 @@ public class utilidades {
 			{
 				if(nome.equalsIgnoreCase(p.getNome()))
 				{
-					((PessoaFisica) p).printPessoaFisica();
+					//((PessoaFisica) p).printPessoaFisica();
 					return p;
 				}
 			}
@@ -31,7 +31,7 @@ public class utilidades {
 			{
 				if(nome.equalsIgnoreCase(p.getNome()))
 				{
-					((PessoaJuridica) p).printPessoaJuridica();
+					//((PessoaJuridica) p).printPessoaJuridica();
 					return p;
 				}
 			}
@@ -46,8 +46,7 @@ public class utilidades {
 		{
 			if(modelo.equalsIgnoreCase(c.getModelo()))
 			{
-				//c.calculaValorDiaria();
-				c.printCarro();
+				//c.printCarro();
 				//System.out.println("valor pendente:"+c.getValorPendente());
 				return c;
 			}
@@ -223,10 +222,10 @@ public class utilidades {
 				String[] itens = linha.split(" ");
 				Carros c = new Carros(itens[0], Integer.parseInt(itens[1]), itens[2], Integer.parseInt(itens[3]), 
 						Boolean.parseBoolean(itens[4]), Double.parseDouble(itens[5]), itens[6]);
-				c.setDataEntrega(itens[8]!= null ? itens[8]:"null" );
+				c.setDataEntrega(itens[8]!= null ? itens[8]:"null" ); // O QUE É ISSSO ?
 				c.setDataAluguel(itens[7]);
 				car.add(c);
-			}//PODE TESTAR
+			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -384,14 +383,12 @@ public class utilidades {
 			PrintWriter printWriter = new PrintWriter(fileWriter);
 			for(Pessoa pes:pessoas){
 				if(pes instanceof PessoaFisica && ((PessoaFisica)pes).getCpf()!=null){
-					//System.out.println("Entrou fisico");
 					printWriter.printf("%s %s %s %s %.2f %n", pes.getNome(), pes.getEndereco(), pes.getTelefone(), 
 						((PessoaFisica) pes).getCpf(), pes.getValorPendencia());
 					
-						//o método flush libera a escrita no arquivo
+					//o método flush libera a escrita no arquivo
 					printWriter.flush();
 				}else if(pes instanceof PessoaJuridica && ((PessoaJuridica)pes).getCnpj()!=null){
-					//System.out.println("Entrou juridico");
 					printWriter.printf("%s %s %s %s %s %.2f %n", pes.getNome(), pes.getEndereco(), pes.getTelefone(), 
 						((PessoaJuridica)pes).getRazaoSocial(), ((PessoaJuridica)pes).getCnpj(), pes.getValorPendencia());
 					
@@ -445,8 +442,6 @@ public class utilidades {
 	//sobrescreve txt alugueis passando array de objetos alugueis como parâmetro
 	public void atualizaTxtAluguel(ArrayList<Aluguel> alugueis)
 	{	
-		System.out.println("-> ATUALIZA TXT ALUGUEL !");
-		System.out.printf("Tamanho array:%d |\n",alugueis.size());
 		try 
 		{
 			FileWriter fileWriter = new FileWriter("./arquivos/alugueis.txt", false);
@@ -468,28 +463,7 @@ public class utilidades {
 			}
 			
 			printWriter.close();
-			/*
-			for(int i = 0; i < alugueis.size()-1; i++)
-			{
-				Aluguel alu = alugueis.get(i);
-				Pessoa p = alu.getPessoa();
-				Carros c = alu.getCarro();
-				System.out.println("-> entrou!");
-				if(p instanceof PessoaFisica)
-					printWriter.printf("%s %s %s %s %s %s %n", p.getNome(), ((PessoaFisica) p).getCpf(), c.getModelo(), 
-							c.getPlaca(), c.getDataAluguel(), alu.getFim());
-				if(p instanceof PessoaJuridica)
-					printWriter.printf("%s %s %s %s %s %s %n", p.getNome(), ((PessoaJuridica) p).getCnpj(), c.getModelo(), 
-							c.getPlaca(), c.getDataAluguel(), alu.getFim());
-					
-				System.out.println(p.getNome()+" ->ATUALIZA TXT ALUGUEL !");
-				//o método flush libera a escrita no arquivo
-				printWriter.flush();
-			}
-			//No final precisamos fechar o arquivo
-            printWriter.close();
-			*/
-	            
+ 
 		} catch (IOException e) 
 		{
 			e.printStackTrace();

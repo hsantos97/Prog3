@@ -24,7 +24,7 @@ public class main {
 		while(flag)
 		{
 			System.out.printf("1-Cadastrar Pf\n2-Cadastrar Pj\n3-Cadastrar Carro\n4-Print Clientes Cadastrados\n"
-					+ "5-Print Carros cadastrados\n6-Buscar Cliente\n7-Buscar Carro\n8-Alugar\n9-Devolver\n10-Pagar Pendencia\n");
+					+ "5-Print Carros cadastrados\n6-Alugar\n7-Devolver\n8-Pagar Pendencia\n");
 			op = leitor.nextInt();
 			switch(op)
 			{
@@ -46,7 +46,6 @@ public class main {
 					PessoaFisica pf = new PessoaFisica(nome, endereco, telefone, cpf);
 					ut.escreveArqPf(pf);//passando o objeto pf, para escrever no arquivo
 					ut.getPessoaTxt();//atualizar o arquivo txt
-					//pessoas.add(new PessoaFisica(nome, endereco, telefone, cpf)); //adicionando a pessoa fisica no arraylist
 					System.out.println("PF CADASTRADO ");
 					break;
 				case 2:
@@ -69,7 +68,6 @@ public class main {
 					PessoaJuridica pj = new PessoaJuridica(nomePj, enderecoPj, telefonePj, razaoSocial, cnpj);
 					ut.escreveArqPj(pj); //passando o objeto pj para escrever no arquivo
 					pessoas = ut.getPessoaTxt(); // atualizando o arquivo txt
-					//pessoas.add(new PessoaJuridica(nomePj, enderecoPj, telefonePj, cnpj, razaoSocial)); // adicionadno ao arraylist
 					System.out.println("PJ CADASTRADO ");
 					break;
 				case 3:
@@ -105,28 +103,18 @@ public class main {
 					c3.calculaValorDiaria();	
 					ut.escreveArqCarro(c3);// passando um objeto carro para escrever no arquivo
 					carro = ut.getCarroTxt();//atualizar os carros no txt
-					//carro.add(new Carros(placa, ano, modelo, quilometragem, situacao, txDiaria, observacao));
 					
 					System.out.println("CARRO CADASTRADO ");
 					break;
 				case 4:
 					//case para imprimir os clientes cadastrados
-					/*for(Pessoa p : pessoas)
-					{
-						if(p instanceof PessoaFisica) 
-							((PessoaFisica) p).printPessoaFisica();
-						if(p instanceof PessoaJuridica)
-							((PessoaJuridica) p).printPessoaJuridica();
-					}*/
 					ut.lerArqCliente();
 					break;
 				case 5:
 					//case para imprimir os carros cadastrados
-					/*for(Carros c : carro)
-						c.printCarro(); */
 					ut.lerArqCarro();
 					break;
-				case 6:
+				/*case 6:
 					//case para buscar cliente
 					System.out.println("Entre com o nome do Cliente:");
 					String n = leitor.next();
@@ -134,7 +122,9 @@ public class main {
 					pessoas = ut.getPessoaTxt();
 					Pessoa pe = ut.buscaCliente(pessoas, n);
 					if(pe == null)
+					{	
 						break;
+					}
 					break;
 				case 7:
 					//case para buscar o carro
@@ -144,8 +134,8 @@ public class main {
 					Carros co = ut.buscaCarro(carro, mod);
 					if(co == null)
 						break;
-					break;
-				case 8:
+					break;*/
+				case 6:
 					//case para alugar o carro
 					System.out.println("Entre com o nome do Cliente:");
 					String n2 = leitor.next();
@@ -182,13 +172,7 @@ public class main {
 					carro = ut.getCarroTxt();
 					aluguel = ut.getAlugueis(carro, pessoas);
 					Aluguel alu = new Aluguel(corr, pes);
-					//System.out.printf("Nome:%s | Modelo:%s \n",alu.getNome(),alu.getModelo());
-					/*aluguel.add(alu);
-					boolean test = alu.alugar();
-					if(!test){
-						System.out.printf(" Carro nao disponivel!\n");
-						break;
-					}*/
+
 					aluguel.add(alu);
 					Carros cr = alu.getCarro();
 					//talves atualizar pessoa
@@ -199,12 +183,11 @@ public class main {
 					carro = ut.getCarroTxt();
 					ut.atualizaTxtAluguel(aluguel);
 					aluguel = ut.getAlugueis(carro, pessoas);
+					System.out.println("ALUGOU O CARRO !!");
 					break;
-				case 9:
+				case 7:
 					//case para devolver o carro
-					//aluguel = ut.getAlugueis(carro, pessoas);
 					aluguel = ut.getAlugueis(carro, pessoas);
-					//System.out.printf("Tamanho array:%d |\n",aluguel.size());
 					System.out.println("Entre com o Modelo:");
 					pessoas = ut.getPessoaTxt();
 					String model = leitor.next();
@@ -222,10 +205,7 @@ public class main {
 						System.out.println("CLIENTE NÃO ENCONTRADO !!");
 						break;
 					}
-					/*if(pesso.getPendencia()){
-						System.out.println("CLIENTE POSSUI PENDÊNCIA !!");
-						break;
-					}*/
+
 					System.out.println("Data do aluguel:");
 					String ini = leitor.next();
 					
@@ -238,7 +218,6 @@ public class main {
 					System.out.println("Quilometragem final");
 					int qf = leitor.nextInt();
 					
-					//c2.calculaValorDiaria();
 												
 					Aluguel alu2 = ut.buscaAluguel(aluguel, n3, model);
 					if(alu2 == null)
@@ -246,8 +225,7 @@ public class main {
 						System.out.println("ALUGUEL NÃO ENCONTRADO !!");
 						break;
 					}
-					//pessoas = ut.getPessoaTxt(); // COLOQUEI ISSO AQUI
-					//ut.atualizaPessoaTxt(pessoas, pesso); //mudei aquiii
+
 
 					alu2.devolverCarro(qf, ini, fim, n3, model, pago);
 					c2.setDataEntrega(fim);
@@ -263,15 +241,16 @@ public class main {
 					Aluguel al = new Aluguel(c2,p);
 					ut.atualizaPessoaTxt(pessoas, p);
 					al.devolverCarro(qf, ini, fim, n3, model, pago); //comentei aqui
-					al.forceFim(fim);//faz mais um teste ae
+					al.forceFim(fim);
 					pessoas = ut.getPessoaTxt();
 					aluguel = ut.atualizaAluguel(aluguel, al);
 					ut.atualizaTxtAluguel(aluguel);
 					//colaca aqui pra pegar o aluguel do txts
 					aluguel = ut.getAlugueis(carro, pessoas);
+					System.out.println("CARRO DEVOLVIDO !!");
 
 					break;
-				case 10:
+				case 8:
 					System.out.println("Entre com o nome do Cliente:");
 					String n4 = leitor.next();
 					//pega as pessoas que estão no arquivo pessoas .txt e retorna um array de pessoas
@@ -280,11 +259,12 @@ public class main {
 					Pessoa pe2 = ut.buscaCliente(pessoas, n4);
 					if(pe2.getValorPendencia() > 0)
 					{
+						System.out.println("Pendencia: "+pe2.getValorPendencia());
 						System.out.println("Valor a pagar: ");
 						double v = leitor.nextDouble();
 						pe2.pagar(v);
 						ut.atualizaPessoaTxt(pessoas, pe2);
-						System.out.printf("Pen: %.2f\nNome:%s\nEntrada:%.2f\n",pe2.getValorPendencia(),pe2.getNome(),v);
+						System.out.printf("\nNome:%s\nEntrada:%.2f\n", pe2.getNome(),v);
 						pessoas = ut.getPessoaTxt();
 						System.out.println("Valor pendencia att: "+pe2.getValorPendencia());
 					}

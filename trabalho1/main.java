@@ -9,9 +9,9 @@ public class main {
 	{
 		ArrayList<Pessoa> pessoas = new ArrayList<>(); // criando um ArrayList para cadastrar clientes
 		ArrayList<Carros> carro = new ArrayList<>(); // criando ArrayList para cadastrar os carros
-		ArrayList<Aluguel> aluguel = new ArrayList<>();
+		ArrayList<Aluguel> aluguel = new ArrayList<>(); // criando um ArraList para cadastrar os alugueis
 		
-		Scanner leitor = new Scanner(System.in);
+		Scanner leitor = new Scanner(System.in); 
 		int op;
 		boolean flag = true;
 		
@@ -24,7 +24,8 @@ public class main {
 		while(flag)
 		{
 			System.out.printf("1-Cadastrar Pf\n2-Cadastrar Pj\n3-Cadastrar Carro\n4-Print Clientes Cadastrados\n"
-					+ "5-Print Carros cadastrados\n6-Alugar\n7-Devolver\n8-Pagar Pendencia\n");
+					+ "5-Print Carros cadastrados\n6-Alugar\n7-Devolver\n8-Pagar Pendencia\n9-Relatorio Carros\n"
+					+"10-Relatorio de Faturamento\n");
 			op = leitor.nextInt();
 			switch(op)
 			{
@@ -67,7 +68,7 @@ public class main {
 					String razaoSocial = leitor.next();
 					PessoaJuridica pj = new PessoaJuridica(nomePj, enderecoPj, telefonePj, razaoSocial, cnpj);
 					ut.escreveArqPj(pj); //passando o objeto pj para escrever no arquivo
-					pessoas = ut.getPessoaTxt(); // atualizando o arquivo txt
+					pessoas = ut.getPessoaTxt(); 
 					System.out.println("PJ CADASTRADO ");
 					break;
 				case 3:
@@ -273,7 +274,18 @@ public class main {
 						System.out.println("CLIENTE NÃOO TEM PENDENCIA !!");
 						break;
 					}
-					break;			
+					break;
+				case 9:
+					carro = ut.getCarroTxt();
+					ut.imprimeRelatorioCarros(carro);
+					break;
+				case 10:
+					carro = ut.getCarroTxt();
+					pessoas = ut.getPessoaTxt();
+					aluguel = ut.getAlugueis(carro, pessoas);
+					System.out.println("INFORME A DATA DE INICIO DO PERIODO: ");
+					String dt = leitor.next();
+					ut.imprimeFaturamento(aluguel, dt);	
 				default:
 					System.out.println("ENCERRADO !!");
 					flag = false;

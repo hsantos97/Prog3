@@ -1,13 +1,14 @@
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Aluguel {
 	private Carros carro;
 	private Pessoa pessoa;
 	private String fim;
-	private int pago;
+	//private int pago;
 	private boolean status;
 	private String nome;
 	private String modelo;
@@ -108,5 +109,36 @@ public class Aluguel {
         
         //status do alugel
         this.status = true;
+	}
+
+	// criar um metodo que calcula com base na data de inicio & fim e retorna o valor a pagar 
+	// observação so pode calcular se data fim != null
+	public Double getValorAluguel()
+	{	
+
+		//data atual ------------tudo que foi lançado----->data inicial 
+		DateFormat df = new SimpleDateFormat ("dd/MM/yyyy");
+        df.setLenient(false);
+        Date d1 = null;
+		if(this.carro.getDataAluguel()==null){return 0.0;}
+		try {
+			d1 = df.parse (this.carro.getDataAluguel());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+        Date d2 = null;
+		if(this.carro.getDataEntrega() == null){return 0.0;}
+		try {
+			d2 = df.parse (this.carro.getDataEntrega());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		long dt =(d2.getTime() - d1.getTime()) + 3600000;
+		double valorPendente =(dt / 86400000L)*(this.carro.getTaxaDiaria());
+		return valorPendente;
+		
+		//System.out.println("CARRO AINDA NÃO FOI DEVOLVIDO !!");
+		
 	}
 }

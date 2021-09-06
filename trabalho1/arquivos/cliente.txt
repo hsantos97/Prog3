@@ -1,2 +1,6 @@
-harison gb 999 888 0.00 
-ana vr 5555 loja 444/4-4 0.00 
+harison gb 9999 9999 120.00 
+joao gt 8888 8888 0.00 
+jose gf 7777 77777 0.00 
+ana vr 4444 loja 44/4-4 0.00 
+maria vt 5555 bar 55/5-5 0.00 
+antonio vy 1111 11111 0.00 

@@ -505,4 +505,65 @@ public class utilidades {
 		SimpleDateFormat formatarDate = new SimpleDateFormat("dd/MM/yyy");
 		return formatarDate.format(data);
 	}
+	// carros alugados
+	// faturamento por periodo
+	// Relatorio de dividas/clientes + carro
+	// 
+	// metodo que imprime relatorio dos carros alugados
+	public void imprimeRelatorioCarros(ArrayList<Carros> carros){
+		ArrayList<Carros> cars = new ArrayList<>();
+
+		// separar apenas carros indisponiveis(false)
+		for( Carros item: carros){	
+			if(item.getSituacao()==false){
+				cars.add(item);
+			}
+		}
+		// imprimir os carros com situação == false
+		System.out.println("Relatório de carros alugados");
+		System.out.printf("Total de carros alugados: %d\n", cars.size());
+		for(Carros car : cars){
+			car.printCarro();
+		}
+	}
+
+	//metodo que calcula faturamento periodo
+	public void imprimeFaturamento(ArrayList<Aluguel> alugueis, String dataInicial){
+		Double total=0.0;
+		
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		df.setLenient(false);
+		try{
+			Date d1 = df.parse(dataInicial);
+			Date d2 = df.parse(this.dataAtual());
+			if(d1.after(d2)){
+				System.out.println("DATA errada otario");
+			}
+			else
+			{
+				//calcular o valor total de faturamento
+				for(Aluguel item:alugueis)
+				{
+					if(item.getValorAluguel()>0 && item.getFim() != null)
+					{
+						Date dataFim = df.parse(item.getFim());
+						if(d2.after(dataFim))
+						{
+							if(item.getValorAluguel() != null)
+							{
+								total +=item.getValorAluguel();
+							}						
+						}		
+					}
+				}
+				System.out.println("RELATORIO DE FATURAMENTO !!");
+				System.out.printf("Periodo: %s ate %s\n", dataInicial, d2);
+				System.out.printf("Faturamento total: %.2f", total);
+			}
+		}catch(ParseException e){
+			e.printStackTrace();
+		}
+
+		
+	}
 }

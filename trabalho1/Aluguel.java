@@ -1,12 +1,12 @@
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Aluguel {
 	private Carros carro;
 	private Pessoa pessoa;
+	//private String dataInicio;
 	private String fim;
 	private boolean status;
 	private String nome;
@@ -26,6 +26,7 @@ public class Aluguel {
 	public void setCarro(Carros c) { this.carro = c; }
 	public void setPessoa(Pessoa p) { this.pessoa = p; }
 	public void setValorDeAluguel(Double valor) { this.valorDeAluguel = valor; }
+	//public void setDataInicio(String ini){ this.dataInicio = ini; }
 	
 	//get
 	public Carros getCarro() { return this.carro; }
@@ -35,6 +36,7 @@ public class Aluguel {
 	public String getNome(){return this.nome;}
 	public String getModelo(){return this.modelo;}
 	public Double getValorDeAluguel() { return this.valorDeAluguel; }
+	//public String getDataIniciio() { return this.dataInicio; }
 	
 	public void forceFim(String fim){
 		this.fim = fim; //getFim
@@ -51,7 +53,7 @@ public class Aluguel {
 			SimpleDateFormat formatarDate = new SimpleDateFormat("dd/MM/yyy"); 
 			System.out.println("Data do alugel: "+formatarDate.format(data));
 			this.carro.setDataAluguel(formatarDate.format(data));
-			//this.carro.setSituacao(false); //deixando o carro indisponivel
+			this.carro.setSituacao(false); //deixando o carro indisponivel
 			System.out.println("Carro alugado !!");
 			return true;
 		}
@@ -112,7 +114,8 @@ public class Aluguel {
         this.carro.setSituacao(true);
         
         //data de devolução
-        this.fim = fim;
+        //this.fim = fim;
+		this.carro.setDataEntrega(fim);
         
         //status do alugel
         this.status = true;

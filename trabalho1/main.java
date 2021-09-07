@@ -1,8 +1,6 @@
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import java.util.*;
 
 public class main {
 	public static void main(String[] args) 
@@ -19,7 +17,7 @@ public class main {
 		//ut.criaArqTxt(); //metodo da classe utiliade que criar os arquivos
 		pessoas = ut.getPessoaTxt();//pega do txt e atualiza o arraylist
 		carro = ut.getCarroTxt();//pega do txt e atualiza o arraylist
-		//aluguel = ut.getAlugueis(carro, pessoas); 
+		aluguel = ut.getAlugueis(carro, pessoas); 
 		
 		while(flag)
 		{
@@ -117,59 +115,43 @@ public class main {
 					break;
 				case 6:
 					//case para alugar o carro
+					pessoas = ut.getPessoaTxt();
+					carro = ut.getCarroTxt();
+					aluguel = ut.getAlugueis(carro, pessoas);
+
 					System.out.println("Entre com o nome do Cliente:");
 					String n2 = leitor.next();
-					pessoas = ut.getPessoaTxt();
-					//obter pessoas do banco
 					Pessoa pes = ut.buscaCliente(pessoas, n2);
 					if(pes == null)
 						break;
-					if(pes.getPendencia())
-					{
-						System.out.println("CLIENTE COM PENDENCIA !!");
-						break;
-					}
 
 					System.out.println("Entre com o Modelo:");
 					String modol = leitor.next();
-					carro = ut.getCarroTxt();
-					//obter carros do banco
 					Carros corr = ut.buscaCarro(carro, modol);
 					if(corr == null)
 						break;
-					if(!corr.getSituacao())
-					{
-						System.out.println("CARRO JA ESTÁ ALUGADO !!");
-						break;
-					}
-					corr.setDataAluguel(ut.dataAtual());
-					corr.setDataEntrega("***");
-					corr.setSituacao(false);
-					//atualizando os txts
-					ut.atualizaTxtAluguel(aluguel);
-					aluguel = ut.getAlugueis(carro, pessoas);
-					ut.atualizaCarroTxt(carro, corr);
-					carro = ut.getCarroTxt();
-					aluguel = ut.getAlugueis(carro, pessoas);
 
 					Aluguel alu = new Aluguel(corr, pes);
-					aluguel.add(alu);
+					if(alu.alugar())
+					{
+						aluguel.add(alu);
+						corr.setDataAluguel(ut.dataAtual());
+						corr.setDataEntrega("***");
+					}	
 
-					Carros cr = alu.getCarro();
-					cr.setDataAluguel(ut.dataAtual());
-					cr.setDataEntrega("null");
-					cr.setSituacao(false);
-					ut.atualizaCarroTxt(carro, cr);
-					carro = ut.getCarroTxt();
+					ut.atualizaCarroTxt(carro, corr);
+					ut.atualizaPessoaTxt(pessoas, pes);
 					ut.atualizaTxtAluguel(aluguel);
-					aluguel = ut.getAlugueis(carro, pessoas);
+
 					System.out.println("ALUGOU O CARRO !!");
 					break;
 				case 7:
 					//case para devolver o carro
-					aluguel = ut.getAlugueis(carro, pessoas);
-					System.out.println("Entre com o Modelo:");
 					pessoas = ut.getPessoaTxt();
+					carro = ut.getCarroTxt();
+					aluguel = ut.getAlugueis(carro, pessoas);
+					
+					System.out.println("Entre com o Modelo:");
 					String model = leitor.next();
 					Carros c2 = ut.buscaCarro(carro, model);
 					if(c2 == null)
@@ -206,35 +188,22 @@ public class main {
 						break;
 					}
 
-
 					alu2.devolverCarro(qf, ini, fim, n3, model, pago);
-					c2.setDataEntrega(fim);
-					c2.setSituacao(true);
-					
-					Pessoa p = alu2.getPessoa();
+					System.out.printf("Valor pendencia :%.2f\n",pesso.getValorPendencia());
 
-					System.out.printf("Valor pendencia :%.2f\n",p.getValorPendencia());
-					ut.atualizaCarroTxt(carro, c2); 
-
-					carro = ut.getCarroTxt();
-					Aluguel al = new Aluguel(c2,p);
-					ut.atualizaPessoaTxt(pessoas, p);
-					al.devolverCarro(qf, ini, fim, n3, model, pago);
-					al.forceFim(fim);
-					pessoas = ut.getPessoaTxt();
-					aluguel = ut.atualizaAluguel(aluguel, al);
-					ut.atualizaTxtAluguel(aluguel);
-					//colaca aqui pra pegar o aluguel do txts
-					aluguel = ut.getAlugueis(carro, pessoas);
-					ut.atualizaFaturamentoTxt(al.getValorDeAluguel()); // MUDEEEEI AQUIIII
+					ut.atualizaPessoaTxt(pessoas, pesso);				
+					ut.atualizaCarroTxt(carro, c2);
+					ut.atualizaTxtAluguel(aluguel); 
+					ut.atualizaFaturamentoTxt(alu2.getValorDeAluguel()); 
 					System.out.println("CARRO DEVOLVIDO !!");
 
 					break;
 				case 8:
 					//case para pagar as pendencia dos clientes
+					pessoas = ut.getPessoaTxt();
+
 					System.out.println("Entre com o nome do Cliente:");
 					String n4 = leitor.next();
-					pessoas = ut.getPessoaTxt();
 					Pessoa pe2 = ut.buscaCliente(pessoas, n4);
 					if(pe2.getValorPendencia() > 0)
 					{
@@ -242,9 +211,7 @@ public class main {
 						System.out.println("Valor a pagar: ");
 						double v = leitor.nextDouble();
 						pe2.pagar(v);
-						ut.atualizaPessoaTxt(pessoas, pe2);
-						System.out.printf("\nNome:%s\nEntrada:%.2f\n", pe2.getNome(),v);
-						pessoas = ut.getPessoaTxt();
+						System.out.printf("Nome:%s\nValor Pago:%.2f\n", pe2.getNome(),v);
 						System.out.println("Valor pendencia att: "+pe2.getValorPendencia());
 					}
 					else
@@ -252,6 +219,9 @@ public class main {
 						System.out.println("CLIENTE NÃOO TEM PENDENCIA !!");
 						break;
 					}
+
+					ut.atualizaPessoaTxt(pessoas, pe2);
+
 					break;
 				case 9:
 					//case para imprimir os relatorio dos carros alugados

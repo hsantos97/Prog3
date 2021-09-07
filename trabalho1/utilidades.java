@@ -604,15 +604,33 @@ public class utilidades {
 	//imprime nome, valor da pendencia e o carro.
 	public void imprimeDevedores(ArrayList<Aluguel> alugueis)
 	{
+		String aux = "";
 		for(int i = 0; i < alugueis.size(); i++)
 		{
 			Carros c = alugueis.get(i).getCarro();
-			Pessoa p = alugueis.get(i).getPessoa();
+			Pessoa p = alugueis.get(i).getPessoa();	
+			if(p.getPendencia())
+			{	
+				if(aux != p.getNome())
+				{
+					System.out.printf("Nome: %s\nValor: %.2f\nModelo: %s\n", p.getNome(), p.getValorPendencia(), 
+						c.getModelo());
+				}
+				aux = p.getNome();
+			}
+		}
+		
+		/*for(int i = 0; i < alugueis.size(); i++)
+		{
+			Carros c = alugueis.get(i).getCarro();
+			Pessoa p = alugueis.get(i).getPessoa();	
 			if(p.getPendencia())
 			{
 				System.out.printf("Nome: %s\nValor: %.2f\nModelo: %s\n", p.getNome(), p.getValorPendencia(), 
 					c.getModelo());
+
 			}
-		}
+
+		}*/
 	}
 }

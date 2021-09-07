@@ -17,7 +17,7 @@ public class main {
 		//ut.criaArqTxt(); //metodo da classe utiliade que criar os arquivos
 		pessoas = ut.getPessoaTxt();//pega do txt e atualiza o arraylist
 		carro = ut.getCarroTxt();//pega do txt e atualiza o arraylist
-		aluguel = ut.getAlugueis(carro, pessoas); 
+		aluguel = ut.getAlugueis(carro, pessoas); //pega do txt e atualiza o arraylist
 		
 		while(flag)
 		{

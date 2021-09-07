@@ -61,13 +61,16 @@ public class utilidades {
 		java.io.File arquivo = new java.io.File(diretorio, "cliente.txt");
 		java.io.File arquivo2 = new java.io.File(diretorio, "carros.txt");
 		java.io.File arquivo3 = new java.io.File(diretorio, "alugueis.txt");
+		java.io.File arquivo4 = new java.io.File(diretorio, "faturamento.txt");
 		try {
 			boolean statusArq = arquivo.createNewFile(); //criando o arquivo fisico
 			boolean statusArq2 = arquivo2.createNewFile();
 			boolean statusArq3 = arquivo3.createNewFile();
+			boolean statusArq4 = arquivo4.createNewFile();
 			System.out.print(statusArq);
 			System.out.print(statusArq2); 
 			System.out.print(statusArq3);
+			System.out.print(statusArq4);
 		} catch (IOException e) {
 		    e.printStackTrace(); 
 		}
@@ -286,10 +289,10 @@ public class utilidades {
 				
 				if(p instanceof PessoaFisica)
 					printWriter.printf("%s %s %s %s %s %n", p.getNome(), ((PessoaFisica) p).getCpf(), 
-							c.getModelo(), c.getPlaca(), c.getDataAluguel());
+							c.getModelo(), c.getPlaca(), c.getDataAluguel(),p.getValorPendencia());
 				if(p instanceof PessoaJuridica)
 					printWriter.printf("%s %s %s %s %s %n", p.getNome(), ((PessoaJuridica) p).getCnpj(),
-							c.getModelo(), c.getPlaca(), c.getDataAluguel());
+							c.getModelo(), c.getPlaca(), c.getDataAluguel(),c.getValorPendente(),p.getValorPendencia());
 				
 				//System.out.println(p.getNome()+" ESCREVE ALUGUEIS");
 				//o método flush libera a escrita no arquivo
@@ -453,11 +456,11 @@ public class utilidades {
 				//System.out.println("Entrou");
 				if(p instanceof PessoaFisica){
 					printWriter.printf("%s %s %s %s %s %s %n", p.getNome(), ((PessoaFisica) p).getCpf(), c.getModelo(), 
-						c.getPlaca(), c.getDataAluguel(), c.getDataEntrega());
+						c.getPlaca(), c.getDataAluguel(), c.getDataEntrega(),aluguel.getValorDeAluguel());
 				}
 				if(p instanceof PessoaJuridica)
 					printWriter.printf("%s %s %s %s %s %s %n", p.getNome(), ((PessoaJuridica) p).getCnpj(), c.getModelo(), 
-							c.getPlaca(), c.getDataAluguel(), c.getDataEntrega());
+							c.getPlaca(), c.getDataAluguel(), c.getDataEntrega(),aluguel.getValorDeAluguel());
 				
 				printWriter.flush();
 			}
@@ -528,42 +531,84 @@ public class utilidades {
 	}
 
 	//metodo que calcula faturamento periodo
-	public void imprimeFaturamento(ArrayList<Aluguel> alugueis, String dataInicial){
-		Double total=0.0;
+	public void imprimeFaturamento(ArrayList<Pessoa> pessoas){
+		Double faturamento = 0.0;
+		for(Pessoa item: pessoas){
+			faturamento += item.getValorPendencia();
+			//System.out.println(item.getValorPendente());
+		}
+		System.out.println("FATURAMENTO TOTAL: "+faturamento);
+	}
+	//funcao 1
+	// criar metodo que recebe um double como parametro guarda um double em um txt
+	public void escreveFaturamento(Double p)
+	{
+		try 
+		{
+			FileWriter fileWriter = new FileWriter("./arquivos/faturamento.txt", false);
+			PrintWriter printWriter = new PrintWriter(fileWriter);
+			printWriter.printf("%.2f %n", p);
 		
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		df.setLenient(false);
-		try{
-			Date d1 = df.parse(dataInicial);
-			Date d2 = df.parse(this.dataAtual());
-			if(d1.after(d2)){
-				System.out.println("DATA errada otario");
-			}
-			else
+			//o método flush libera a escrita no arquivo
+            printWriter.flush();
+            
+            //No final precisamos fechar o arquivo
+            printWriter.close();
+		} catch (IOException e) 
+		{
+			e.printStackTrace();
+		}	
+	}
+	//funcao 2
+	// criar um metodo que le um txt e tranforma a string em um Double e retorna esse double
+	public double getFaturamentoTxt()
+	{
+		File dir = new File("arquivos");
+		File arq = new File(dir, "faturamento.txt");
+		Double val = 0.0;
+
+		try {
+			Scanner arquivo = new Scanner(new FileReader(arq));
+			while(arquivo.hasNextLine())
 			{
-				//calcular o valor total de faturamento
-				for(Aluguel item:alugueis)
-				{
-					if(item.getValorAluguel()>0 && item.getFim() != null)
-					{
-						Date dataFim = df.parse(item.getFim());
-						if(d2.after(dataFim))
-						{
-							if(item.getValorAluguel() != null)
-							{
-								total +=item.getValorAluguel();
-							}						
-						}		
-					}
-				}
-				System.out.println("RELATORIO DE FATURAMENTO !!");
-				System.out.printf("Periodo: %s ate %s\n", dataInicial, d2);
-				System.out.printf("Faturamento total: %.2f", total);
+				String linha = arquivo.nextLine();
+				//System.out.println(linha);
+				//String[] itens = linha.split(" ");
+				/*Carros c = new Carros(itens[0], Integer.parseInt(itens[1]), itens[2], Integer.parseInt(itens[3]), 
+						Boolean.parseBoolean(itens[4]), Double.parseDouble(itens[5]), itens[6]);
+				c.setDataEntrega(itens[8]!= null ? itens[8]:"null" ); // O QUE É ISSSO ?
+				c.setDataAluguel(itens[7]);
+				car.add(c); */
+				val = linha != null ? Double.parseDouble(linha): 0.0;
+				//double val = Double.parseDouble(itens[0]);
+				//return val;
 			}
-		}catch(ParseException e){
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		return val;
+	}
 
-		
+	public void atualizaFaturamentoTxt(double p)
+	{
+		double b = this.getFaturamentoTxt();
+		this.escreveFaturamento(p+b);
+		System.out.printf("TESTEEE: %.2f     %.2f\n", p, b);
+	}
+
+	public void imprimeDevedores(ArrayList<Aluguel> alugueis)
+	{
+		Carros c;
+		Pessoa p;
+		for(Aluguel itens : alugueis)
+		{
+			c = itens.getCarro();
+			p = itens.getPessoa();
+			if(p.getValorPendencia() > 0 && p.getPendencia())
+			{
+				System.out.printf("Nome: %s\nValor: %.2f\nModelo: %s\n", itens.getNome(), 
+				p.getValorPendencia(), itens.getModelo());
+			}
+		}
 	}
 }

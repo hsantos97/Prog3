@@ -12,6 +12,7 @@ public class Aluguel {
 	private boolean status;
 	private String nome;
 	private String modelo;
+	private Double valorDeAluguel;
 	
 	//construtor
 	public Aluguel(Carros carro, Pessoa pessoa)
@@ -25,6 +26,7 @@ public class Aluguel {
 	//setts
 	public void setCarro(Carros c) { this.carro = c; }
 	public void setPessoa(Pessoa p) { this.pessoa = p; }
+	public void setValorDeAluguel(Double valor) { this.valorDeAluguel = valor; }
 	
 	//get
 	public Carros getCarro() { return this.carro; }
@@ -33,10 +35,14 @@ public class Aluguel {
 	public String getFim() { return this.fim; }
 	public String getNome(){return this.nome;}
 	public String getModelo(){return this.modelo;}
+	public Double getValorDeAluguel() { return this.valorDeAluguel; }
 	
 	public void forceFim(String fim){
-		this.fim = fim;
+		this.fim = fim; //getFim
 	}
+	/*public String getFimReal(){
+		return this.carro.getDataEntrega();
+	} */
 	public boolean alugar()
 	{
 		if(this.carro.getSituacao() && !this.pessoa.getPendencia())
@@ -90,7 +96,10 @@ public class Aluguel {
         System.out.println ("Dias com o carro:"+dt / 86400000L);
 
         double valorPendente =(dt / 86400000L)*(this.carro.getTaxaDiaria());
-        
+        this.valorDeAluguel = valorPendente;//salvar essa porra no txt de alugel
+		//pq esse é o valor do aluguel e so seta se for pago pq faz parte do metodo de devolver
+		//sacou?:
+		
         //sett na pendencia, caso pago = 0 quer dizer que o cliente pagou o carro e não vai ficar com pendencia
         if(pago == 0){
         	this.pessoa.setValorPendencia(0.0);
@@ -110,35 +119,8 @@ public class Aluguel {
         //status do alugel
         this.status = true;
 	}
-
-	// criar um metodo que calcula com base na data de inicio & fim e retorna o valor a pagar 
-	// observação so pode calcular se data fim != null
-	public Double getValorAluguel()
-	{	
-
-		//data atual ------------tudo que foi lançado----->data inicial 
-		DateFormat df = new SimpleDateFormat ("dd/MM/yyyy");
-        df.setLenient(false);
-        Date d1 = null;
-		if(this.carro.getDataAluguel()==null){return 0.0;}
-		try {
-			d1 = df.parse (this.carro.getDataAluguel());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-        Date d2 = null;
-		if(this.carro.getDataEntrega() == null){return 0.0;}
-		try {
-			d2 = df.parse (this.carro.getDataEntrega());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
-		long dt =(d2.getTime() - d1.getTime()) + 3600000;
-		double valorPendente =(dt / 86400000L)*(this.carro.getTaxaDiaria());
-		return valorPendente;
-		
-		//System.out.println("CARRO AINDA NÃO FOI DEVOLVIDO !!");
-		
+	//
+	public Double getValorTotal(){
+		return this.valorDeAluguel;
 	}
 }

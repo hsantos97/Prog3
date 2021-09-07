@@ -25,7 +25,7 @@ public class main {
 		{
 			System.out.printf("1-Cadastrar Pf\n2-Cadastrar Pj\n3-Cadastrar Carro\n4-Print Clientes Cadastrados\n"
 					+ "5-Print Carros cadastrados\n6-Alugar\n7-Devolver\n8-Pagar Pendencia\n9-Relatorio Carros\n"
-					+"10-Relatorio de Faturamento\n");
+					+"10-Relatorio de Faturamento\n11-Relatorio de Clientes devedores\n");
 			op = leitor.nextInt();
 			switch(op)
 			{
@@ -235,7 +235,7 @@ public class main {
 					Pessoa p = alu2.getPessoa();
 
 					System.out.printf("Valor pendencia :%.2f\n",p.getValorPendencia());
-
+					//alu2.setValorDeAluguel(p.getValorPendencia());
 					ut.atualizaCarroTxt(carro, c2); 
 
 					carro = ut.getCarroTxt();
@@ -248,10 +248,12 @@ public class main {
 					ut.atualizaTxtAluguel(aluguel);
 					//colaca aqui pra pegar o aluguel do txts
 					aluguel = ut.getAlugueis(carro, pessoas);
+					ut.atualizaFaturamentoTxt(al.getValorDeAluguel()); // MUDEEEEI AQUIIII
 					System.out.println("CARRO DEVOLVIDO !!");
 
 					break;
 				case 8:
+					//case para pagar as pendencia dos clientes
 					System.out.println("Entre com o nome do Cliente:");
 					String n4 = leitor.next();
 					//pega as pessoas que estão no arquivo pessoas .txt e retorna um array de pessoas
@@ -276,16 +278,27 @@ public class main {
 					}
 					break;
 				case 9:
+					//case para imprimir os relatorio dos carros alugados
 					carro = ut.getCarroTxt();
 					ut.imprimeRelatorioCarros(carro);
 					break;
 				case 10:
+					//CASO PARA VALOR DO FATURAMENTO
+					//case para imprimir os relatorios de faturamento
+					/*carro = ut.getCarroTxt();
+					pessoas = ut.getPessoaTxt();
+					aluguel = ut.getAlugueis(carro, pessoas);
+					ut.imprimeFaturamento(pessoas);	*/
+					System.out.println("VALOR FATURADO TOTAL !!");
+					System.out.println(ut.getFaturamentoTxt());
+					break;
+				case 11:
+					//case para clientes devedores
 					carro = ut.getCarroTxt();
 					pessoas = ut.getPessoaTxt();
 					aluguel = ut.getAlugueis(carro, pessoas);
-					System.out.println("INFORME A DATA DE INICIO DO PERIODO: ");
-					String dt = leitor.next();
-					ut.imprimeFaturamento(aluguel, dt);	
+					ut.imprimeDevedores(aluguel);
+					break;
 				default:
 					System.out.println("ENCERRADO !!");
 					flag = false;

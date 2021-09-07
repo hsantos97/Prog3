@@ -8,7 +8,6 @@ public class Aluguel {
 	private Carros carro;
 	private Pessoa pessoa;
 	private String fim;
-	//private int pago;
 	private boolean status;
 	private String nome;
 	private String modelo;
@@ -43,17 +42,17 @@ public class Aluguel {
 	/*public String getFimReal(){
 		return this.carro.getDataEntrega();
 	} */
+	//metodo para fazer o aluguel do carro, caso seja alugado retorna true se não retorna false
 	public boolean alugar()
 	{
-		if(this.carro.getSituacao() && !this.pessoa.getPendencia())
+		if(this.carro.getSituacao() && !this.pessoa.getPendencia()) //verifica a situação e a pendencia do cliente
 		{
-			System.out.println("Carro alugado !!");
 			Date data = new Date(System.currentTimeMillis()); 
 			SimpleDateFormat formatarDate = new SimpleDateFormat("dd/MM/yyy"); 
 			System.out.println("Data do alugel: "+formatarDate.format(data));
-
 			this.carro.setDataAluguel(formatarDate.format(data));
 			//this.carro.setSituacao(false); //deixando o carro indisponivel
+			System.out.println("Carro alugado !!");
 			return true;
 		}
 		else if(!this.carro.getSituacao())
@@ -68,10 +67,11 @@ public class Aluguel {
 		}
 		return false;
 	}
-	
+	//metodo que recebe a quilometragem final do carro, data de inicio e fim do aluguel, nome e modelo
+	//e uma variavel inteira para representar se o cliente pagou o carro.
 	public void devolverCarro(int quilometragem, String inicio, String fim, String nome, String modelo, int pago)
 	{
-		int quilometragemAndada = (quilometragem - this.carro.getQuilometragem());
+		int quilometragemAndada = (quilometragem - this.carro.getQuilometragem());//calculando quilometros andados
 		this.carro.setQuilometragem(quilometragemAndada);
 		System.out.printf("Quilometragem atualizada: %dKm\nQuilometros andados:%dKm\n", 
 				this.carro.getQuilometragem(), quilometragemAndada);
@@ -79,7 +79,7 @@ public class Aluguel {
 		/* diferença de dias entre duas datas, transforme-as para milissegundos, obtenha a diferença, 
 		  some 1 hora (devido a problemas de horário de verão etc.) e divida por 86400000. */
 		DateFormat df = new SimpleDateFormat ("dd/MM/yyyy");
-        df.setLenient(false);
+        df.setLenient(false); //metodo do objeto SimpleDateFormat passando false para que utilize o formato desejado
         Date d1 = null;
 		try {
 			d1 = df.parse (inicio);
@@ -96,9 +96,7 @@ public class Aluguel {
         System.out.println ("Dias com o carro:"+dt / 86400000L);
 
         double valorPendente =(dt / 86400000L)*(this.carro.getTaxaDiaria());
-        this.valorDeAluguel = valorPendente;//salvar essa porra no txt de alugel
-		//pq esse é o valor do aluguel e so seta se for pago pq faz parte do metodo de devolver
-		//sacou?:
+        this.valorDeAluguel = valorPendente;
 		
         //sett na pendencia, caso pago = 0 quer dizer que o cliente pagou o carro e não vai ficar com pendencia
         if(pago == 0){
@@ -118,9 +116,5 @@ public class Aluguel {
         
         //status do alugel
         this.status = true;
-	}
-	//
-	public Double getValorTotal(){
-		return this.valorDeAluguel;
 	}
 }

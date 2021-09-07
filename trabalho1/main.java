@@ -16,9 +16,9 @@ public class main {
 		boolean flag = true;
 		
 		utilidades ut = new utilidades();
-		//ut.criaArqTxt();
-		pessoas = ut.getPessoaTxt();
-		carro = ut.getCarroTxt();
+		//ut.criaArqTxt(); //metodo da classe utiliade que criar os arquivos
+		pessoas = ut.getPessoaTxt();//pega do txt e atualiza o arraylist
+		carro = ut.getCarroTxt();//pega do txt e atualiza o arraylist
 		//aluguel = ut.getAlugueis(carro, pessoas); 
 		
 		while(flag)
@@ -39,14 +39,14 @@ public class main {
 					String telefone = leitor.next();
 					System.out.println("Entre com o cpf: ");
 					String cpf = leitor.next();
-					if(ut.verificar(pessoas, cpf))
+					if(ut.verificar(pessoas, cpf)) //verifica se ja existe algum cliente com esse cpf
 					{
 						System.out.println("CPF JA EXISTENTE");
 						break;
 					}
 					PessoaFisica pf = new PessoaFisica(nome, endereco, telefone, cpf);
 					ut.escreveArqPf(pf);//passando o objeto pf, para escrever no arquivo
-					ut.getPessoaTxt();//atualizar o arquivo txt
+					ut.getPessoaTxt();//pega do txt e atualiza o arraylist
 					System.out.println("PF CADASTRADO ");
 					break;
 				case 2:
@@ -68,7 +68,7 @@ public class main {
 					String razaoSocial = leitor.next();
 					PessoaJuridica pj = new PessoaJuridica(nomePj, enderecoPj, telefonePj, razaoSocial, cnpj);
 					ut.escreveArqPj(pj); //passando o objeto pj para escrever no arquivo
-					pessoas = ut.getPessoaTxt(); 
+					pessoas = ut.getPessoaTxt(); //pega do txt e atualiza o arraylist
 					System.out.println("PJ CADASTRADO ");
 					break;
 				case 3:
@@ -103,7 +103,7 @@ public class main {
 					Carros c3 = new Carros(placa, ano, modelo, quilometragem, situacao, txDiaria, observacao);
 					c3.calculaValorDiaria();	
 					ut.escreveArqCarro(c3);// passando um objeto carro para escrever no arquivo
-					carro = ut.getCarroTxt();//atualizar os carros no txt
+					carro = ut.getCarroTxt();//pega do txt e atualiza o arraylist
 					
 					System.out.println("CARRO CADASTRADO ");
 					break;
@@ -115,27 +115,6 @@ public class main {
 					//case para imprimir os carros cadastrados
 					ut.lerArqCarro();
 					break;
-				/*case 6:
-					//case para buscar cliente
-					System.out.println("Entre com o nome do Cliente:");
-					String n = leitor.next();
-
-					pessoas = ut.getPessoaTxt();
-					Pessoa pe = ut.buscaCliente(pessoas, n);
-					if(pe == null)
-					{	
-						break;
-					}
-					break;
-				case 7:
-					//case para buscar o carro
-					System.out.println("Entre com o Modelo:");
-					String mod = leitor.next();
-					carro = ut.getCarroTxt();
-					Carros co = ut.buscaCarro(carro, mod);
-					if(co == null)
-						break;
-					break;*/
 				case 6:
 					//case para alugar o carro
 					System.out.println("Entre com o nome do Cliente:");
@@ -166,17 +145,17 @@ public class main {
 					corr.setDataAluguel(ut.dataAtual());
 					corr.setDataEntrega("***");
 					corr.setSituacao(false);
-
+					//atualizando os txts
 					ut.atualizaTxtAluguel(aluguel);
 					aluguel = ut.getAlugueis(carro, pessoas);
-					ut.atualizaCarroTxt(carro, corr);//atualiza txt de carro
+					ut.atualizaCarroTxt(carro, corr);
 					carro = ut.getCarroTxt();
 					aluguel = ut.getAlugueis(carro, pessoas);
-					Aluguel alu = new Aluguel(corr, pes);
 
+					Aluguel alu = new Aluguel(corr, pes);
 					aluguel.add(alu);
+
 					Carros cr = alu.getCarro();
-					//talves atualizar pessoa
 					cr.setDataAluguel(ut.dataAtual());
 					cr.setDataEntrega("null");
 					cr.setSituacao(false);
@@ -235,13 +214,12 @@ public class main {
 					Pessoa p = alu2.getPessoa();
 
 					System.out.printf("Valor pendencia :%.2f\n",p.getValorPendencia());
-					//alu2.setValorDeAluguel(p.getValorPendencia());
 					ut.atualizaCarroTxt(carro, c2); 
 
 					carro = ut.getCarroTxt();
 					Aluguel al = new Aluguel(c2,p);
 					ut.atualizaPessoaTxt(pessoas, p);
-					al.devolverCarro(qf, ini, fim, n3, model, pago); //comentei aqui
+					al.devolverCarro(qf, ini, fim, n3, model, pago);
 					al.forceFim(fim);
 					pessoas = ut.getPessoaTxt();
 					aluguel = ut.atualizaAluguel(aluguel, al);
@@ -256,9 +234,7 @@ public class main {
 					//case para pagar as pendencia dos clientes
 					System.out.println("Entre com o nome do Cliente:");
 					String n4 = leitor.next();
-					//pega as pessoas que estão no arquivo pessoas .txt e retorna um array de pessoas
-					pessoas = ut.getPessoaTxt();//retorna um array de pessoas
-					//buscar no array de pessoas recem atualizado, a pessoa n4
+					pessoas = ut.getPessoaTxt();
 					Pessoa pe2 = ut.buscaCliente(pessoas, n4);
 					if(pe2.getValorPendencia() > 0)
 					{
@@ -283,12 +259,7 @@ public class main {
 					ut.imprimeRelatorioCarros(carro);
 					break;
 				case 10:
-					//CASO PARA VALOR DO FATURAMENTO
 					//case para imprimir os relatorios de faturamento
-					/*carro = ut.getCarroTxt();
-					pessoas = ut.getPessoaTxt();
-					aluguel = ut.getAlugueis(carro, pessoas);
-					ut.imprimeFaturamento(pessoas);	*/
 					System.out.println("VALOR FATURADO TOTAL !!");
 					System.out.println(ut.getFaturamentoTxt());
 					break;
@@ -304,38 +275,6 @@ public class main {
 					flag = false;
 					break;
 			}
-
 		}
-		
-		//PessoaFisica pf = new PessoaFisica("harison", "Goiabal", "24999162280", "11989685272");
-		//PessoaJuridica pj = new PessoaJuridica("goiabas fc", "Goiabal", "24999162280", "Clube", "24/6464-3");
-		
-		//System.out.println("PRINT DA PESSOA CADASTRADA !!");
-		//pf.printPessoaFisica();
-		//pj.printPessoaJuridica();
-		
-		/*Carros c = new Carros("KVG-123", 2021, "SUV", 100, true, 10.0, "novo");
-		Carros c2 = new Carros("KVG-122", 2019, "SUV", 1000, true, 10.0, "semi-novo");
-		c.calculaValorDiaria();
-		c2.calculaValorDiaria();
-		//System.out.println("PRINT DA CARRO CADASTRADO !!");
-		//c.printCarro();
-		
-		System.out.println("PRINT  PARA ALUGAR CARRO CADASTRADO !!");
-		c.alugarCarro(pf.getPendencia());
-		c2.alugarCarro(pf.getPendencia());
-		
-		System.out.println("PRINT PARA DEVOLVER CARRO CADASTRADO !!");
-		c.devolverCarro(200, "10/05/2021", "15/07/2021)", 0);
-		c2.devolverCarro(1200, "10/05/2021", "15/07/2021)", 1);
-		
-		double val = c.getValorPendente();
-		pf.setValorPendencia(val);
-		double val2 = c2.getValorPendente();
-		pf.setValorPendencia(val2);
-		
-		System.out.println("PRINT PARA ALUGAR CARRO CADASTRADO !!");
-		c.alugarCarro(pf.getPendencia()); */
-
 	}
 }

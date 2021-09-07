@@ -16,7 +16,6 @@ public class Carros implements CalculaValor {
 	private int quilometragem;
 	private boolean situacao;
 	private double taxaDiaria;
-	//private double taxaPorKm;
 	private String observacoes;
 	private double valorPendente;
 	private String dataAluguel;
@@ -31,9 +30,7 @@ public class Carros implements CalculaValor {
 		this.quilometragem = quilometragem;
 		this.situacao = situacao;
 		this.taxaDiaria = taxaDiaria;
-		//this.taxaPorKm = taxaPorKm;
 		this.observacoes = observacoes;
-		//this.valorPendente = valorPendente;
 	}
 	
 	//getts
@@ -43,7 +40,6 @@ public class Carros implements CalculaValor {
 	public int getQuilometragem() { return this.quilometragem; }
 	public boolean getSituacao() { return this.situacao; }
 	public double getTaxaDiaria() { return this.taxaDiaria; }
-	//public double getTaxaPorKm() { return this.taxaPorKm; }
 	public String getObservacoes() { return this.observacoes; }
 	public double getValorPendente() { return this.valorPendente; }
 	public String getDataAluguel() { return this.dataAluguel; }
@@ -53,12 +49,11 @@ public class Carros implements CalculaValor {
 	public void setQuilometragem(int quilometragem) { this.quilometragem += quilometragem; }
 	public void setSituacao(boolean situacao) { this.situacao = situacao; }
 	public void setTaxaDiaria(double taxaDiaria) { this.taxaDiaria = taxaDiaria; }
-	//public void setTaxaPorKm(double taxaPorKm) { this.taxaPorKm = taxaPorKm; }
 	public void setObservacoes(String observacoes) { this.observacoes = observacoes; }
 	public void setValorPendente(double valorPendente) { this.valorPendente = valorPendente; }
 	public void setDataAluguel(String dataAluguel) { this.dataAluguel = dataAluguel; }
 	public void setDataEntrega(String dataEntrega) { this.dataEntrega = dataEntrega; }
-	
+	//metodo para imprimir os atributos do carro
 	public void printCarro()
 	{
 		System.out.printf("Placa: %s\nAno: %d\nModelo: %s\nQuilometragem: %d\nSituação: %b\nTaxa Diaria: %.2f\n", 

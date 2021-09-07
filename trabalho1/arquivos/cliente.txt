@@ -1,1 +1,2 @@
-harison gb 9999 999 30.00 
+harison gb 9999 999 40.00 
+ana vr 8888 loja 88/8-8 0.00 

@@ -225,8 +225,7 @@ public class main {
 					break;
 				case 9:
 					//case para imprimir os relatorio dos carros alugados
-					carro = ut.getCarroTxt();
-					ut.imprimeRelatorioCarros(carro);
+					ut.imprimeRelatorioCarros();
 					break;
 				case 10:
 					//case para imprimir os relatorios de faturamento

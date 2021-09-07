@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
 
 public class utilidades {
 	//metodo que recebe o arraylist de pessoa e o nome de um cliente percorre o arraylist
@@ -228,7 +226,7 @@ public class utilidades {
 				String[] itens = linha.split(" "); //delimitador 
 				Carros c = new Carros(itens[0], Integer.parseInt(itens[1]), itens[2], Integer.parseInt(itens[3]), 
 						Boolean.parseBoolean(itens[4]), Double.parseDouble(itens[5]), itens[6]);
-				c.setDataEntrega(itens[8]!= null ? itens[8]:"null" ); // O QUE É ISSSO ?
+				c.setDataEntrega(itens[8]!= null ? itens[8]:"null" );
 				c.setDataAluguel(itens[7]);
 				car.add(c);
 			}
@@ -516,22 +514,37 @@ public class utilidades {
 		SimpleDateFormat formatarDate = new SimpleDateFormat("dd/MM/yyy");
 		return formatarDate.format(data);
 	}
-	// metodo que recebe arraylist de carros e imprime os carros que estão alugados
-	public void imprimeRelatorioCarros(ArrayList<Carros> carros){
-		ArrayList<Carros> cars = new ArrayList<>();
+	// metodo imprime os carros que foram alugados
+	public void imprimeRelatorioCarros(){
+		File dir = new File("arquivos");
+		File arq = new File(dir, "alugueis.txt");
+		
+		try {
+	        //Indicamos o arquivo que será lido
+	        FileReader fileReader = new FileReader(arq);
 
-		// separar apenas carros indisponiveis(false)
-		for( Carros item: carros){	
-			if(item.getSituacao()==false){
-				cars.add(item);
-			}
-		}
-		// imprimir os carros com situação == false
-		System.out.println("Relatório de carros alugados");
-		System.out.printf("Total de carros alugados: %d\n", cars.size());
-		for(Carros car : cars){
-			car.printCarro();
-		}
+	        //Criamos o objeto bufferReader que nos
+	        // oferece o método de leitura readLine()
+	        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+	        //String que irá receber cada linha do arquivo
+	        String linha = "";
+
+	        //Fazemos um loop linha a linha no arquivo,
+	        // enquanto ele seja diferente de null.
+	        //O método readLine() devolve a linha na
+	        // posicao do loop para a variavel linha.
+	        while ( ( linha = bufferedReader.readLine() ) != null) {
+	        //Aqui imprimimos a linha
+	        	
+	        System.out.println(linha);
+	    }
+			//liberamos o fluxo dos objetos ou fechamos o arquivo
+	        fileReader.close();
+	        bufferedReader.close();
+		} catch (IOException e) {
+	    	e.printStackTrace();
+	    }
 	}
 
 	//metodo que recebe um arraylist de pessoa e calcula faturamento
@@ -591,16 +604,14 @@ public class utilidades {
 	//imprime nome, valor da pendencia e o carro.
 	public void imprimeDevedores(ArrayList<Aluguel> alugueis)
 	{
-		Carros c;
-		Pessoa p;
-		for(Aluguel itens : alugueis)
+		for(int i = 0; i < alugueis.size(); i++)
 		{
-			c = itens.getCarro();
-			p = itens.getPessoa();
-			if(p.getValorPendencia() > 0 && p.getPendencia())
+			Carros c = alugueis.get(i).getCarro();
+			Pessoa p = alugueis.get(i).getPessoa();
+			if(p.getPendencia())
 			{
-				System.out.printf("Nome: %s\nValor: %.2f\nModelo: %s\n", itens.getNome(), 
-				p.getValorPendencia(), itens.getModelo());
+				System.out.printf("Nome: %s\nValor: %.2f\nModelo: %s\n", p.getNome(), p.getValorPendencia(), 
+					c.getModelo());
 			}
 		}
 	}

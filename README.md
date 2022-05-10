@@ -1,11 +1,24 @@
-# Módulos do curso de POO em JAVA - UFMT
+# Object-oriented programming (OOP)
 
-## Módulos:
+## Features:
+<img align="center" alt="JAVA" height="40" width="40" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-plain-wordmark.svg"><br>
 
- - Estruturas fundamentais da linguagem Java
- - Programação Orientada a Objetos
- - Interfaces, classes locais, classes anônimas e expressões lambda
-  - Herança
-  - Tratamento de Exceções
-  - Collections
-  - Introdução a threads
+## - Fundamental structure:
+ - Data type
+ - Logical and relational operations
+ - conditionals and looping
+ - Strings
+ - Array and ArrayList
+
+## OOP
+ - Interfaces
+ - Local class
+ - Anonymous class
+ - lambda expressions
+ - inheritance
+ - Collections
+## Exceptions
+ - The try statement allows you to define a block of code to be tested for errors while it is being executed
+  
+## Threads induction
+ - The direction or path that is taken while a program is being executed
